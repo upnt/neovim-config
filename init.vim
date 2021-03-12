@@ -1,3 +1,5 @@
+let mapleader="\<Space>"
+
 let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'
 
@@ -28,8 +30,6 @@ endif
 
 filetype plugin indent on
 syntax on
-
-let mapleader="\<Space>"
 
 inoremap <C-j> <ESC>
 tnoremap <C-j> <C-\><C-n>
