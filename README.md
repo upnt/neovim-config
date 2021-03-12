@@ -13,6 +13,8 @@ let mapleader = "\<Space\>"
 |\<Leader\>c| execute command on denite |
 |\<Leader\>p| paste register on denite |
 |\<Leader\>s| choose colorscheme on denite |
+|\<Leader\>r| quickrun |
+
 ### insert mode
 |   mappings   | move |
 |:------------:|:----:|
@@ -45,4 +47,5 @@ let mapleader = "\<Space\>"
 - denite plugins
     - Shougo/denite.nvim
 - other plugins
+    - thinca/vim-quickrun
     - liuchengxu/vista.vim

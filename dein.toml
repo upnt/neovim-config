@@ -70,3 +70,6 @@ function! s:denite_my_settings() abort
 endfunction
 
 '''
+
+[[plugins]]
+repo = "thinca/vim-quickrun"
