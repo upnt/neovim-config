@@ -18,6 +18,7 @@ if dein#load_state($HOME . '/.cache/dein')
     " Let dein manage dein
     " Required:
     call dein#add('Shougo/dein.vim')
+    call dein#add('wsdjeg/dein-ui.vim')
     call dein#load_toml(s:dir_path . '/dein.toml')
     
     " Required:
