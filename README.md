@@ -10,12 +10,13 @@ let mapleader = "\<Space\>"
 |\<Leader\>v| toggle vista |
 
 - on denite
+
 | mappings  | move |
 |:---------:|:----:|
-|\<Leader\>f| open file on denite |
-|\<Leader\>c| execute command on denite |
-|\<Leader\>p| paste register on denite |
-|\<Leader\>s| choose colorscheme on denite |
+|\<Leader\>f| open file |
+|\<Leader\>c| execute command from history |
+|\<Leader\>p| paste register |
+|\<Leader\>s| choose colorscheme |
 ### insert mode
 |   mappings   | move |
 |:------------:|:----:|
