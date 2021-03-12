@@ -28,7 +28,7 @@ let mapleader = "\<Space\>"
 | p | preview |
 | q | quit |
 | i | open\_filter\_buffer |
-| \<Space\> | toggle\_select |
+| h | toggle\_select |
 
 ## plugins
 - plugin manager
