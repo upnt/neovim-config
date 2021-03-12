@@ -9,9 +9,9 @@ let mapleader = "\<Space\>"
 |\<ESC\>\<ESC\>| nohlsearch |
 |\<Leader\>v| toggle vista |
 |\<Leader\>f| open file on denite |
-|\<Leader\>c| choose command from command history |
-|\<Leader\>p| paste from register |
-|\<Leader\>s| change colorscheme |
+|\<Leader\>c| execute command on denite |
+|\<Leader\>p| paste register on denite |
+|\<Leader\>s| choose colorscheme on denite |
 ### insert mode
 |   mappings   | move |
 |:------------:|:----:|
