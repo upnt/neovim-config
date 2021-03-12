@@ -34,6 +34,7 @@ let mapleader="\<Space>"
 inoremap <C-j> <ESC>
 tnoremap <C-j> <C-\><C-n>
 nnoremap <silent><ESC><ESC> :nohlsearch<CR>
+nnoremap <silent><Leader>t :terminal<CR>
 
 set number
 set relativenumber
