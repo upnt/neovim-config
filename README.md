@@ -8,6 +8,10 @@ let mapleader = "\<Space\>"
 |:------------:|:----:|
 |\<ESC\>\<ESC\>| nohlsearch |
 |\<Leader\>v| toggle vista |
+
+- on denite
+| mappings  | move |
+|:---------:|:----:|
 |\<Leader\>f| open file on denite |
 |\<Leader\>c| execute command on denite |
 |\<Leader\>p| paste register on denite |
