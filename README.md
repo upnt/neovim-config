@@ -2,10 +2,10 @@
 has bulitin lsp and some plugins
 
 ## key mappings
-\<Leader\>: \<Space\>
+let mapleader = "\<Space\>"
 ### normal mode
 |   mappings   | move |
-|:------------:|:-----|
+|:------------:|:----:|
 |\<ESC\>\<ESC\>| nohlsearch |
 |\<Leader\>v| toggle vista |
 |\<Leader\>f| open file on denite |
@@ -14,11 +14,11 @@ has bulitin lsp and some plugins
 |\<Leader\>s| change colorscheme |
 ### insert mode
 |   mappings   | move |
-|:------------:|:-----|
+|:------------:|:----:|
 |\<C-j\>| change to normal mode |
 ### terminal mode
 |   mappings   | move |
-|:------------:|:-----|
+|:------------:|:----:|
 |\<C-j\>| change to normal mode |
 ### denite
   l: do\_action
