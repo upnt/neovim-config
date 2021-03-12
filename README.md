@@ -21,12 +21,14 @@ let mapleader = "\<Space\>"
 |:------------:|:----:|
 |\<C-j\>| change to normal mode |
 ### denite
-  l: do\_action
-  d: delete
-  p: preview
-  q: quit
-  i: open\_filter\_buffer
-  \<Space\>: toggle\_select
+|   mappings   | move |
+|:------------:|:----:|
+| l | do\_action |
+| d | delete |
+| p | preview |
+| q | quit |
+| i | open\_filter\_buffer |
+| \<Space\> | toggle\_select |
 
 ## plugins
 - plugin manager
