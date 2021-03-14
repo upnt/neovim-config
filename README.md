@@ -50,3 +50,4 @@ let mapleader = "\<Space\>"
     - thinca/vim-quickrun
     - liuchengxu/vista.vim
     - flazz/vim-colorschemes
+    - itchyny/lightline.vim

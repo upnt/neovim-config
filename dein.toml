@@ -74,8 +74,64 @@ endfunction
 [[plugins]]
 repo = "thinca/vim-quickrun"
 
+
+# view
 [[plugins]]
 repo = "flazz/vim-colorschemes"
 hook_add = '''
 colorscheme molokai
+'''
+
+[[plugins]]
+repo = "itchyny/lightline.vim"
+hook_add = '''
+    set laststatus=2
+    set noshowmode
+    
+    let g:lightline = {
+        \  'enable': { 'tabline': 1 },
+    	\  'active': {
+    	\         'left': [ [ 'mode', 'paste' ],
+    	\                   [ 'readonly', 'myfilename', 'modified' ] ],
+    	\         'right': [ [ 'percent' ],
+    	\                    [ 'method', 'filetype'],
+    	\                    [ 'fileformat', 'fileencoding' ] ]
+        \   },
+        \   'component_function': {
+        \       'myfilename': 'LightlineFilename',
+        \       'method': 'NearestMethodOrFunction',
+        \   },
+    	\   'inactive': {
+    	\         'left': [ [ 'filename' ] ],
+    	\         'right': [ [ 'lineinfo' ],
+    	\                    [ 'percent' ] ]
+        \   },
+    	\   'tabline': {
+    	\         'left': [ [ 'tabs' ] ],
+    	\         'right': [ [ 'close' ] ] 
+        \   },
+        \  'colorscheme': 'solarized',
+        \  'separator': { 'left': "\ue0b0 ", 'right': "\ue0b2 " },
+        \  'subseparator': { 'left': "\ue0b1 ", 'right': "\ue0b3 " }
+        \ } 
+    function! LightlineFilename()
+        let l:p = expand('%:t')
+        if '' !=# l:p
+            return l:p
+        endif
+        return '[No Name]'
+    endfunction
+
+    function! NearestMethodOrFunction() abort
+        let l:func_name = get(b:, 'vista_nearest_method_or_function', '')
+        if l:func_name != ''
+            return ' ' . l:func_name
+        endif
+        return ''
+    endfunction
+   
+    augroup LightLineOnVista
+        autocmd!
+        autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+    augroup END   
 '''
