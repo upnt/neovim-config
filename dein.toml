@@ -73,3 +73,9 @@ endfunction
 
 [[plugins]]
 repo = "thinca/vim-quickrun"
+
+[[plugins]]
+repo = "flazz/vim-colorschemes"
+hook_add = '''
+colorscheme molokai
+'''

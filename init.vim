@@ -1,4 +1,5 @@
 let mapleader="\<Space>"
+colorscheme desert
 
 let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'
@@ -55,8 +56,6 @@ set tabstop=4
 set softtabstop=4
 set autoindent
 set smartindent
-
-colorscheme desert
 
 if has('persistent_undo')
 	let undo_path = expand('~/AppData/Local/nvim/undo')

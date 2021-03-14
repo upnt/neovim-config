@@ -49,3 +49,4 @@ let mapleader = "\<Space\>"
 - other plugins
     - thinca/vim-quickrun
     - liuchengxu/vista.vim
+    - flazz/vim-colorschemes
