@@ -46,6 +46,8 @@ set ignorecase
 set smartcase
 set wrapscan
 
+runtime indent.vim
+
 if has('persistent_undo')
 	let undo_path = expand('~/.cache/undo')
 	if !isdirectory(undo_path)
