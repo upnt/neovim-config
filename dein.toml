@@ -76,7 +76,7 @@ endfunction
 [[plugins]]
 repo = "Shougo/deol.nvim"
 hook_add = '''
-nnoremap <silent><Leader>f :Deol<CR>
+nnoremap <silent><Leader>t :Deol<CR>
 '''
 
 [[plugins]]

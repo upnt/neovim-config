@@ -21,11 +21,12 @@ let mapleader = "\<Space\>"
 |\<Leader\>v| toggle vista |
 |\<Leader\>t| open terminal |
 |\<Leader\>f| open file on denite |
-|\<Leader\>:| execute command on denite |
-|\<Leader\>p| paste register on denite |
+|\<Leader\>b| open buffer on denite |
 |\<Leader\>s| choose denite source |
 |\<Leader\>c| choose colorscheme on denite |
 |\<Leader\>h| choose help on denite |
+|\<Leader\>:| execute command on denite |
+|\<Leader\>p| paste register on denite |
 |\<Leader\>r| quickrun |
 
 ### denite
@@ -52,6 +53,7 @@ let mapleader = "\<Space\>"
 - denite plugins
     - Shougo/denite.nvim
 - other plugins
+    - Shougo/deol.nvim
     - thinca/vim-quickrun
     - liuchengxu/vista.vim
     - itchyny/lightline.vim
