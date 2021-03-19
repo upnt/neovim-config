@@ -4,15 +4,13 @@ let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'
 
 
-"dein Scripts-----------------------------
+" Dein Setting
 if &compatible
     set nocompatible               " Be iMproved
 endif
 
-
 " Required:
 set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
-let s:dir_path = stdpath('config')
 
 " Required:
 if dein#load_state($HOME . '/.cache/dein')
@@ -21,7 +19,7 @@ if dein#load_state($HOME . '/.cache/dein')
     " Required:
     call dein#add('Shougo/dein.vim')
     call dein#add('wsdjeg/dein-ui.vim')
-    call dein#load_toml(s:dir_path . '/dein.toml')
+    call dein#load_toml(stdpath('config') . '/dein.toml')
     
     " Required:
     call dein#end()
@@ -34,11 +32,9 @@ syntax on
 inoremap <C-j> <ESC>
 tnoremap <C-j> <C-\><C-n>
 nnoremap <silent><ESC><ESC> :nohlsearch<CR>
-nnoremap <silent><Leader>t :terminal<CR>
 
 set number
 set relativenumber
-set expandtab
 set cursorline
 
 set confirm
@@ -49,12 +45,6 @@ set incsearch
 set ignorecase
 set smartcase
 set wrapscan
-
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set autoindent
-set smartindent
 
 if has('persistent_undo')
 	let undo_path = expand('~/.cache/undo')
