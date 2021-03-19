@@ -5,7 +5,7 @@ repo = "neovim/nvim-lsp"
 repo = "neovim/nvim-lspconfig"
 
 [[plugins]]
-repo = "anott03/nvim-lspinstall"
+repo = "alexaandru/nvim-lspupdate"
 
 [[plugins]]
 repo = "liuchengxu/vista.vim"

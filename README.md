@@ -45,7 +45,7 @@ let mapleader = "\<Space\>"
 - lsp plugins
     - neovim/nvim-lsp
     - neovim/nvim-lspconfig
-    - anott03/nvim-lspinstall
+    - alexaandru/nvim-lspupdate
 - deoplete plugins
     - Shougo/deoplete.nvim
     - deoplete-plugins/deoplete-lsp
@@ -54,6 +54,18 @@ let mapleader = "\<Space\>"
 - other plugins
     - thinca/vim-quickrun
     - liuchengxu/vista.vim
-    - flazz/vim-colorschemes
     - itchyny/lightline.vim
+    - flazz/vim-colorschemes
     - upnt/vim-hold-colorscheme
+
+## Quick Start for lsp
+
+1. edit lsp config in init.vim
+
+For example
+
+```vim
+lua require'lspconfig'.pyright.setup{}
+```
+
+2. execute :LspUpdate
