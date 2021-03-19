@@ -1,5 +1,4 @@
 let mapleader="\<Space>"
-colorscheme desert
 
 let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'
