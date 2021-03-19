@@ -83,9 +83,6 @@ repo = "flazz/vim-colorschemes"
 
 [[plugins]]
 repo = "upnt/vim-hold-colorscheme"
-hook_add = '''
-let g:colorschemepath = stdpath('config') . '/colorscheme'
-'''
 
 [[plugins]]
 repo = "itchyny/lightline.vim"

@@ -57,7 +57,10 @@ set autoindent
 set smartindent
 
 if has('persistent_undo')
-	let undo_path = expand('~/AppData/Local/nvim/undo')
+	let undo_path = expand('~/.cache/undo')
+	if !isdirectory(undo_path)
+		call mkdir(undo_path, "p")
+	endif
 	exe 'set undodir=' .. undo_path
 	set undofile
 endif
