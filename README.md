@@ -3,6 +3,17 @@ has bulitin lsp and some plugins
 
 ## key mappings
 let mapleader = "\<Space\>"
+
+### insert mode
+|   mappings   | move |
+|:------------:|:----:|
+|\<C-j\>| change to normal mode |
+
+### terminal mode
+|   mappings   | move |
+|:------------:|:----:|
+|\<C-j\>| change to normal mode |
+
 ### normal mode
 |   mappings   | move |
 |:------------:|:----:|
@@ -10,19 +21,13 @@ let mapleader = "\<Space\>"
 |\<Leader\>v| toggle vista |
 |\<Leader\>t| open terminal |
 |\<Leader\>f| open file on denite |
-|\<Leader\>c| execute command on denite |
+|\<Leader\>:| execute command on denite |
 |\<Leader\>p| paste register on denite |
-|\<Leader\>s| choose colorscheme on denite |
+|\<Leader\>s| choose denite source |
+|\<Leader\>c| choose colorscheme on denite |
+|\<Leader\>h| choose help on denite |
 |\<Leader\>r| quickrun |
 
-### insert mode
-|   mappings   | move |
-|:------------:|:----:|
-|\<C-j\>| change to normal mode |
-### terminal mode
-|   mappings   | move |
-|:------------:|:----:|
-|\<C-j\>| change to normal mode |
 ### denite
 |   mappings   | move |
 |:------------:|:----:|

@@ -48,9 +48,11 @@ let g:deoplete#lsp#handler_enabled = v:false
 repo = "Shougo/denite.nvim"
 hook_add = '''
 nnoremap <silent><Leader>f :Denite file/rec<CR>
-nnoremap <silent><Leader>c :Denite command_history<CR>
+nnoremap <silent><Leader>: :Denite command_history<CR>
 nnoremap <silent><Leader>p :Denite register<CR>
-nnoremap <silent><Leader>s :Denite colorscheme<CR>
+nnoremap <silent><Leader>s :Denite source<CR>
+nnoremap <silent><Leader>c :Denite colorscheme<CR>
+nnoremap <silent><Leader>h :Denite help<CR>
 
 
 autocmd FileType denite call s:denite_my_settings()
