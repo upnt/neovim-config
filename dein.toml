@@ -78,8 +78,11 @@ repo = "thinca/vim-quickrun"
 # view
 [[plugins]]
 repo = "flazz/vim-colorschemes"
+
+[[plugins]]
+repo = "upnt/vim-hold-colorscheme"
 hook_add = '''
-colorscheme molokai
+let g:colorschemepath = stdpath('config')
 '''
 
 [[plugins]]

@@ -51,3 +51,4 @@ let mapleader = "\<Space\>"
     - liuchengxu/vista.vim
     - flazz/vim-colorschemes
     - itchyny/lightline.vim
+    - upnt/vim-hold-colorscheme
