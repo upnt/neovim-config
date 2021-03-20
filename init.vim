@@ -1,4 +1,7 @@
+" Setting
 let mapleader="\<Space>"
+inoremap <C-j> <ESC>
+tnoremap <C-j> <C-\><C-n>
 
 let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'
@@ -29,25 +32,39 @@ endif
 filetype plugin indent on
 syntax on
 
-inoremap <C-j> <ESC>
-tnoremap <C-j> <C-\><C-n>
-nnoremap <silent><ESC><ESC> :nohlsearch<CR>
 
+" Config
+set title
 set number
 set relativenumber
 set cursorline
-
-set confirm
 set hidden
 
+
+" Search
+nnoremap <silent><ESC><ESC> :nohlsearch<CR>
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-set wrapscan
 
-runtime indent.vim
 
+" Indent
+set autoindent
+set smartindent
+set expandtab
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+
+" folding
+set foldlevel=6
+set foldmethod=expr
+set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+
+
+" undo
 if has('persistent_undo')
 	let undo_path = expand('~/.cache/undo')
 	if !isdirectory(undo_path)
