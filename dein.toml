@@ -101,7 +101,7 @@ hook_add = '''
     	\  'active': {
     	\         'left': [ [ 'mode', 'paste' ],
     	\                   [ 'readonly', 'myfilename', 'modified' ] ],
-    	\         'right': [ [ 'percent' ],
+    	\         'right': [ [ 'lineinfo' ],
     	\                    [ 'method', 'filetype'],
     	\                    [ 'fileformat', 'fileencoding' ] ]
         \   },
