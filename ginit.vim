@@ -1,2 +1,2 @@
- GuiFont! Cica:h16:l
+ GuiFont! Cica:h17
  GuiTabline 0

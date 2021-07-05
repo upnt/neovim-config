@@ -5,58 +5,64 @@ tnoremap <C-j> <C-\><C-n>
 
 let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'
-
-
-" Dein Setting
-if &compatible
-    set nocompatible               " Be iMproved
+if exists('g:neovide')
+    let g:neovide_cursor_vfx_mode = "railgun"
+    let g:neovide_transparency=0.8
+    set guifont=Cica:h22
 endif
 
-" Required:
-set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
-set runtimepath+=$HOME/.vim/bundle/vim-snippets
+if !exists('g:vscode')
 
-" Required:
-if dein#load_state($HOME . '/.cache/dein')
-    call dein#begin($HOME . '/.cache/dein')
-    " Let dein manage dein
-    " Required:
-    call dein#add('Shougo/dein.vim')
-    call dein#add('wsdjeg/dein-ui.vim')
-    call dein#load_toml(stdpath('config') . '/dein.toml')
+    " Dein Setting
+    if &compatible
+        set nocompatible               " Be iMproved
+    endif
     
     " Required:
-    call dein#end()
-    call dein#save_state()
+    set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
+    set runtimepath+=$HOME/.vim/bundle/vim-snippets
+    
+    " Required:
+    if dein#load_state($HOME . '/.cache/dein')
+        call dein#begin($HOME . '/.cache/dein')
+        " Let dein manage dein
+        " Required:
+        call dein#add('Shougo/dein.vim')
+        call dein#add('wsdjeg/dein-ui.vim')
+        call dein#load_toml(stdpath('config') . '/dein.toml')
+        
+        " Required:
+        call dein#end()
+        call dein#save_state()
+    endif
+    
+    filetype plugin indent on
+    syntax on
+    
 endif
 
-filetype plugin indent on
-syntax on
-
-
 " Config
+set number
+set relativenumber
+
 set title
 set cursorline
 set hidden
 set splitbelow
-set helpheight=999
+set helpheight=25
 set iminsert=1
+set ambiwidth=double
+set background=dark
 
-set number
-set relativenumber
-au filetype quickrun setl norelativenumber
-
-
-" TODO: make plugin
-if has("win64")
-    au filetype tex nnoremap <silent><Leader>q :!start %:r.pdf<CR><CR>
-elseif has("mac")
-    au filetype tex nnoremap <silent><Leader>q :!open %:r.pdf<CR><CR>
-else
-    au filetype tex nnoremap <silent><Leader>q :echo "open-pdf don't support"<CR><CR>
+if has('termguicolors')
+  set termguicolors
 endif
 
-au BufNewFile,BufRead *.snip set filetype=snip
+augroup MySetting
+    au!
+    au filetype quickrun setl norelativenumber
+    au BufNewFile,BufRead *.snip set filetype=snip
+augroup END
 
 " Tab
 nnoremap <silent>gr :tabprevious<CR>
@@ -99,17 +105,7 @@ if has('persistent_undo')
 	set undofile
 endif
 
-
-" Lsp
-lua << EOF
-require'lspconfig'.vimls.setup{}
-require'lspconfig'.cmake.setup{}
-require'lspconfig'.jsonls.setup{}
-require'lspconfig'.pyls.setup{}
-require'lspconfig'.texlab.setup{}
-require'lspconfig'.dockerls.setup{}
-require'lspconfig'.html.setup{}
-require'lspconfig'.cssls.setup{}
-require'lspconfig'.yamlls.setup{}
-require'lspconfig'.sqlls.setup{}
-EOF
+if exists('g:colortheme')
+    execute('colorscheme ' . g:colortheme)
+    let g:lightline.colorscheme = g:colortheme
+endif

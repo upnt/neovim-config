@@ -1,81 +1,48 @@
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
+repo = "neoclide/coc.nvim"
+merged = 0
+hook_add = '''
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<s-tab>'
+let g:coc_global_extensions = ['coc-stylelintplus', 'coc-powershell']
+nnoremap <Leader>ch :call CocAction('doHover')<CR>
+nnoremap <Leader>cr <Plug>(coc-references)
+nnoremap <Leader>cd <Plug>(coc-definition)
+nnoremap <Leader>cn <Plug>(coc-rename)
+nnoremap <Leader>cf <Plug>(coc-format)
+'''
 
 [[plugins]]
-repo = "neovim/nvim-lsp"
-
-[[plugins]]
-repo = "neovim/nvim-lspconfig"
-
-[[plugins]]
-repo = "alexaandru/nvim-lspupdate"
+repo = "lervag/vimtex"
 
 [[plugins]]
 repo = "liuchengxu/vista.vim"
 hook_add = '''
     let g:vista_sidebar_width = 30
     let g:vista_echo_cursor = 0
-    let g:vista_default_executive = 'nvim_lsp'
+    let g:vista_default_executive = 'coc'
     nnoremap <silent><Leader>v :Vista!!<CR>
 '''
 
 [[plugins]]
-repo = "Shougo/deoplete.nvim"
-lazy = 1
-on_i = 1
-depends = ['deoplete-lsp']
-hook_source = '''
-    let g:deoplete#enable_at_startup = 1
-    call deoplete#custom#option({
-        \ 'auto_complete': v:true,
-        \ 'min_pattern_length': 2,
-        \ 'auto_complete_delay': 0,
-        \ 'auto_refresh_delay': 20,
-        \ 'refresh_always': v:true,
-        \ 'smart_case': v:true,
-        \ 'camel_case': v:true,
-        \ 'ignore_case': v:false,
-        \ })
-'''
-
-[[plugins]]
-repo = "deoplete-plugins/deoplete-lsp"
-lazy = 1
-on_i = 1
-hook_add = '''
-let g:deoplete#lsp#handler_enabled = v:false
-'''
-
-[[plugins]]
-repo = "Shougo/deoppet.nvim"
-hook_add = '''
-command! DeoppetEdit exe 'e ~/.vim/bundle/vim-snippets/snippets/' . &filetype . '.snip'
-call deoppet#initialize()
-call deoppet#custom#option('snippets',
-\ map(globpath(&runtimepath, '*snippets', 1, 1),
-\     { _, val -> { 'path': val } }))
-
-
-imap <C-k>  <Plug>(deoppet_expand)
-imap <C-f>  <Plug>(deoppet_jump_forward)
-imap <C-b>  <Plug>(deoppet_jump_backward)
-xmap <C-l>  <Plug>(deoppet_select_text)
-xmap <C-x>  <Plug>(deoppet_cut_text)
-'''
-
-[[plugins]]
-repo = "Shougo/neosnippet-snippets"
-
-[[plugins]]
 repo = "Shougo/denite.nvim"
 hook_add = '''
-nnoremap <silent><Leader>f :Denite file/rec<CR>
+nnoremap <silent><Leader>d :Denite file/rec<CR>
 nnoremap <silent><Leader>b :Denite buffer<CR>
 nnoremap <silent><Leader>: :Denite command_history<CR>
 nnoremap <silent><Leader>p :Denite register<CR>
 nnoremap <silent><Leader>s :Denite source<CR>
-nnoremap <silent><Leader>c :Denite colorscheme<CR>
 nnoremap <silent><Leader>h :Denite help<CR>
 
 
@@ -97,48 +64,113 @@ endfunction
 '''
 
 [[plugins]]
+repo = "Shougo/defx.nvim"
+hook_add = '''
+nnoremap <silent><Leader>f :execute('Defx -buffer-name=' . tabpagenr())<CR>
+function! Tabopen(context) abort
+    execute('tabe ' . expand(a:context.targets[0]))
+endfunction
+function! s:defx_my_settings() abort
+    " Define mappings
+    nnoremap <silent><buffer><expr> l
+	\ defx#is_directory() ?
+	\ defx#do_action('open_tree', 'toggle') :
+	\ defx#do_action('drop')
+    nnoremap <silent><buffer><expr> t
+	\ defx#do_action('call', 'Tabopen')
+    nnoremap <silent><buffer><expr> c
+    \ defx#do_action('copy')
+    nnoremap <silent><buffer><expr> m
+    \ defx#do_action('move')
+    nnoremap <silent><buffer><expr> p
+    \ defx#do_action('paste')
+    nnoremap <silent><buffer><expr> o
+    \ defx#do_action('open')
+    nnoremap <silent><buffer><expr> P
+    \ defx#do_action('preview')
+    nnoremap <silent><buffer><expr> K
+    \ defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> N
+    \ defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> M
+    \ defx#do_action('new_multiple_files')
+    nnoremap <silent><buffer><expr> C
+    \ defx#do_action('toggle_columns',
+    \                'mark:indent:icon:filename:type:size:time')
+    nnoremap <silent><buffer><expr> S
+    \ defx#do_action('toggle_sort', 'time')
+    nnoremap <silent><buffer><expr> d
+    \ defx#do_action('remove')
+    nnoremap <silent><buffer><expr> r
+    \ defx#do_action('rename')
+    nnoremap <silent><buffer><expr> !
+    \ defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr> x
+    \ defx#do_action('execute_system')
+    nnoremap <silent><buffer><expr> yy
+    \ defx#do_action('yank_path')
+    nnoremap <silent><buffer><expr> .
+    \ defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr> ;
+    \ defx#do_action('repeat')
+    nnoremap <silent><buffer><expr> h
+    \ defx#do_action('cd', ['..'])
+    nnoremap <silent><buffer><expr> ~
+    \ defx#do_action('cd')
+    nnoremap <silent><buffer><expr> q
+    \ defx#do_action('quit')
+    nnoremap <silent><buffer><expr> <Space>
+    \ defx#do_action('toggle_select')
+    nnoremap <silent><buffer><expr> *
+    \ defx#do_action('toggle_select_all')
+    nnoremap <silent><buffer><expr> <C-l>
+    \ defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> <C-g>
+    \ defx#do_action('print')
+    nnoremap <silent><buffer><expr> cd
+    \ defx#do_action('change_vim_cwd')
+endfunction
+call defx#custom#option('_', {
+    \ 'split': 'vertical',
+    \ 'winwidth': 30,
+    \ 'toggle': v:true,
+    \ 'focus': v:false,
+    \ 'columns': 'indent:git:icons:filename:type',
+    \ 'ignored_files': '.*,*.aux,*.log,*.synctex.gz,*.dvi,*.fdb_latexmk,*.fls'
+    \ })
+call defx#custom#column('git', {
+    \ 'show_ignored': 0,
+    \ 'column_length': 2
+    \ })
+augroup MyDefx
+    au!
+    au filetype defx setl nonumber
+    au filetype defx setl norelativenumber
+    au filetype defx call s:defx_my_settings()
+augroup END
+'''
+
+[[plugins]]
+repo = "kristijanhusak/defx-icons"
+
+[[plugins]]
+repo = "kristijanhusak/defx-git"
+
+[[plugins]]
 repo = "Shougo/deol.nvim"
 hook_add = '''
-nnoremap <silent><Leader>s :Deol<CR>
+augroup MyDeol
+    au!
+    au VimEnter *cmd.exe set filetype=zsh
+augroup END
+nnoremap <silent><Leader>t :Deol powershell<CR>
 '''
-
-[[plugins]]
-repo = "thinca/vim-quickrun"
-hook_add = '''
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-let g:quickrun_config = get(g:, 'quickrun_config', {})
-
-let g:quickrun_config._ = {
-\   'runner'    : 'vimproc',
-\   'runner/vimproc/updatetime' : 60,
-\   'outputter' : 'error',
-\   'outputter/error/success' : 'buffer',
-\   'outputter/error/error'   : 'quickfix',
-\   'outputter/buffer/split'  : '5',
-\   'outputter/buffer/close_on_empty' : 1,
-\ }
-
-let g:quickrun_config.tex = {
-\   'command' : 'ptex2pdf.exe',
-\   'cmdopt' : '-l -ot -kanji=utf8'
-\ }
-'''
-
-# operator
-[[plugins]]
-repo = "simeji/winresizer"
-
 
 # view
 [[plugins]]
-repo = "flazz/vim-colorschemes"
-
-[[plugins]]
-repo = "upnt/vim-hold-colorscheme"
-
-[[plugins]]
 repo = "itchyny/lightline.vim"
 hook_add = '''
+    set showtabline=2
     set laststatus=2
     set noshowmode
     
@@ -147,12 +179,13 @@ hook_add = '''
     	\  'active': {
     	\         'left': [ [ 'mode', 'paste' ],
     	\                   [ 'readonly', 'myfilename', 'modified' ] ],
-    	\         'right': [ [ 'percent' ],
-    	\                    [ 'filetype'],
+    	\         'right': [ [ 'lineinfo' ],
+    	\                    [ 'method', 'filetype'],
     	\                    [ 'fileformat', 'fileencoding' ] ]
         \   },
         \   'component_function': {
         \       'myfilename': 'LightlineFilename',
+        \       'method': 'NearestMethodOrFunction',
         \   },
     	\   'inactive': {
     	\         'left': [ [ 'filename' ] ],
@@ -163,8 +196,8 @@ hook_add = '''
     	\         'left': [ [ 'tabs' ] ],
     	\         'right': [ [ 'close' ] ] 
         \   },
-        \  'separator': { 'left': "\ue0b0 ", 'right': "\ue0b2 " },
-        \  'subseparator': { 'left': "\ue0b1 ", 'right': "\ue0b3 " }
+        \  'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+        \  'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
         \ } 
     function! LightlineFilename()
         let l:p = expand('%:t')
@@ -173,32 +206,48 @@ hook_add = '''
         endif
         return '[No Name]'
     endfunction
+    function! NearestMethodOrFunction() abort
+        let l:func_name = get(b:, 'vista_nearest_method_or_function', '')
+        if l:func_name != ''
+            return ' ' . l:func_name
+        endif
+        return ''
+    endfunction
+   
+    augroup LightLineOnVista
+        autocmd!
+        autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+    augroup END 
 '''
 
-
 [[plugins]]
-repo = 'skanehira/translate.vim'
+repo = "sainnhe/everforest"
 hook_add = '''
-let g:translate_source = "en"
-let g:translate_target = "ja"
-let g:translate_winsize = 10
-let g:translate_popup_window = 1
-nnoremap <Leader>t :Translate<CR>
-vnoremap <Leader>t :'<,'>Translate<CR>
+
+let g:everforest_background = 'hard'
+let g:everforest_enable_italic = 1
+let g:everforest_disable_italic_comment = 1
 '''
 
 [[plugins]]
-repo = 'tyru/open-browser.vim'
+repo = "sainnhe/sonokai"
 hook_add = '''
-nmap <Leader>w <Plug>(openbrowser-smart-search)
-vmap <Leader>w <Plug>(openbrowser-smart-search)
+let g:colortheme = 'sonokai'
+
+let g:sonokai_style = 'andromeda'
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+let g:sonokai_better_performance = 1
+let g:sonokai_diagnostic_virtual_text = 'colored'
+let g:sonokai_diagnostic_line_highlight = 1
+let g:sonokai_diagnostic_text_highlight = 1
 '''
 
 [[plugins]]
-repo = 'airblade/vim-gitgutter'
+repo = "airblade/vim-gitgutter"
 
 [[plugins]]
-repo = 'tpope/vim-fugitive'
+repo = "tpope/vim-fugitive"
 hook_add = '''
 nnoremap <silent><Leader>gd :Gvdiffsplit<CR>
 nnoremap <silent><Leader>gb :Gblame<CR>
@@ -207,6 +256,12 @@ nnoremap <silent><Leader>gp :Git push<CR>
 '''
 
 [[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-lazy = 1
-on_cmd = ['help']
+repo = "vim-jp/vimdoc-ja"
+
+[[plugins]]
+repo = "airblade/vim-rooter"
+hook_add = '''
+let g:rooter_patterns = ['.git', 'Makefile', '*.sln']
+let g:rooter_change_directory_for_non_project_files = 'current'
+let g:rooter_cd_cmd = 'tcd'
+'''
