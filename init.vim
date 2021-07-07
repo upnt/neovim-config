@@ -1,7 +1,7 @@
 " Setting
 let mapleader="\<Space>"
-inoremap <silent><C-j> <ESC>
-tnoremap <C-j> <C-\><C-n>
+inoremap <silent><C-;> <ESC>
+tnoremap <C-;> <C-\><C-n>
 
 let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'

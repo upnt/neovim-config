@@ -1,4 +1,10 @@
 [[plugins]]
+repo = "nvim-lua/plenary.nvim"
+
+[[plugins]]
+repo = "nvim-lua/popup.nvim"
+
+[[plugins]]
 repo = "neoclide/coc.nvim"
 merged = 0
 hook_add = '''
@@ -15,13 +21,19 @@ endfunction
 
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
-let g:coc_global_extensions = ['coc-stylelintplus', 'coc-powershell']
+let g:coc_global_extensions = ['coc-stylelintplus', 'coc-git', 'coc-fzf-preview']
 nnoremap <Leader>ch :call CocAction('doHover')<CR>
 nnoremap <Leader>cr <Plug>(coc-references)
 nnoremap <Leader>cd <Plug>(coc-definition)
 nnoremap <Leader>cn <Plug>(coc-rename)
 nnoremap <Leader>cf <Plug>(coc-format)
+nnoremap <silent><Leader>d :CocList files<CR>
+nnoremap <silent><Leader>b :CocList buffers<CR>
+nnoremap <silent><Leader>h :CocList helptags<CR>
 '''
+
+[[plugins]]
+repo = "josa42/vim-lightline-coc"
 
 [[plugins]]
 repo = "lervag/vimtex"
@@ -35,33 +47,6 @@ hook_add = '''
     nnoremap <silent><Leader>v :Vista!!<CR>
 '''
 
-[[plugins]]
-repo = "Shougo/denite.nvim"
-hook_add = '''
-nnoremap <silent><Leader>d :Denite file/rec<CR>
-nnoremap <silent><Leader>b :Denite buffer<CR>
-nnoremap <silent><Leader>: :Denite command_history<CR>
-nnoremap <silent><Leader>p :Denite register<CR>
-nnoremap <silent><Leader>s :Denite source<CR>
-nnoremap <silent><Leader>h :Denite help<CR>
-
-
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> l
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> h
-  \ denite#do_map('toggle_select')
-endfunction
-'''
 
 [[plugins]]
 repo = "Shougo/defx.nvim"
@@ -174,31 +159,49 @@ hook_add = '''
     set laststatus=2
     set noshowmode
     
-    let g:lightline = {
-        \  'enable': { 'tabline': 1 },
-    	\  'active': {
-    	\         'left': [ [ 'mode', 'paste' ],
-    	\                   [ 'readonly', 'myfilename', 'modified' ] ],
-    	\         'right': [ [ 'lineinfo' ],
-    	\                    [ 'method', 'filetype'],
-    	\                    [ 'fileformat', 'fileencoding' ] ]
-        \   },
-        \   'component_function': {
-        \       'myfilename': 'LightlineFilename',
-        \       'method': 'NearestMethodOrFunction',
-        \   },
-    	\   'inactive': {
-    	\         'left': [ [ 'filename' ] ],
-    	\         'right': [ [ 'lineinfo' ],
-    	\                    [ 'percent' ] ]
-        \   },
-    	\   'tabline': {
-    	\         'left': [ [ 'tabs' ] ],
-    	\         'right': [ [ 'close' ] ] 
-        \   },
-        \  'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-        \  'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-        \ } 
+    let g:lightline = {}
+    let g:lightline.enable = { 'tabline': 1 }
+    let g:lightline.active = {
+    \   'left':  [ [ 'mode', 'paste', 'coc_info', 'coc_hints', 'coc_errors', 'coc_warnings', 'coc_ok'],
+    \              [ 'gitbranch', 'diagonostic', 'coc_status', 'filename', 'modified'] ],
+    \   'right': [ [ 'lineinfo' ],
+    \              [ 'method', 'filetype'],
+    \              [ 'fileformat', 'fileencoding' ] ]
+    \   }
+    let g:lightline.component_function ={
+    \       'filename': 'LightlineFilename',
+    \       'method': 'NearestMethodOrFunction',
+    \       'filetype': 'LightlineFiletype', 
+    \       'fileformat': 'LightlineFileformat', 
+    \       'fileencoding': 'LightlineFileencoding', 
+    \  }
+    let g:lightline.component_expand = {
+    \       'gitbranch': 'LightlineGitbranch',
+    \       'coc_warnings': 'lightline#coc#warnings',
+    \       'coc_errors': 'lightline#coc#errors',
+    \       'coc_info': 'lightline#coc#info',
+    \       'coc_hints': 'lightline#coc#hints',
+    \       'coc_ok': 'lightline#coc#ok',
+    \       'coc_status': 'coc#status',
+    \   }
+    let g:lightline.component_type = {
+    \       'coc_warnings': 'warning',
+    \       'coc_errors': 'error',
+    \       'coc_info': 'info',
+    \       'coc_hints': 'hints',
+    \       'coc_ok': 'left',
+    \   }
+    let g:lightline.inactive = {
+    \       'left':  [ [ 'filename' ] ],
+    \       'right': [ [ 'lineinfo' ],
+    \                  [ 'percent' ] ]
+    \   }
+    let g:lightline.tabline = {
+    \       'left': [ [ 'tabs' ] ],
+    \       'right': [ [ 'close' ] ] 
+    \   }
+    let g:lightline.separator    = { 'left': "\ue0b0", 'right': "\ue0b2" }
+    let g:lightline.subseparator = { 'left': "\ue0b1", 'right': "\ue0b3" }
     function! LightlineFilename()
         let l:p = expand('%:t')
         if '' !=# l:p
@@ -208,10 +211,34 @@ hook_add = '''
     endfunction
     function! NearestMethodOrFunction() abort
         let l:func_name = get(b:, 'vista_nearest_method_or_function', '')
-        if l:func_name != ''
+        if winwidth(0) <= 70
+            return ''
+        elseif l:func_name != ''
             return ' ' . l:func_name
         endif
         return ''
+    endfunction
+
+    function! LightlineGitbranch()
+        if len(fugitive#head()) == 0
+            return ''
+        elseif winwidth(0) <= 70
+            return ''
+        else
+            return "\ue0a0" . fugitive#head()
+        endif
+    endfunction
+
+    function! LightlineFileformat()
+        return winwidth(0) > 70 ? &fileformat : ''
+    endfunction
+    
+    function! LightlineFiletype()
+        return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+    endfunction
+    
+    function! LightlineFileencoding()
+        return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
     endfunction
    
     augroup LightLineOnVista
