@@ -1,6 +1,4 @@
 # neovim-config
-has bulitin lsp and some plugins
-
 ## key mappings
 let mapleader = "\<Space\>"
 
@@ -38,14 +36,18 @@ let mapleader = "\<Space\>"
 | h | toggle\_select |
 
 ## plugins
-- plugin manager(Shougo/dein.nvim)
-- plagin manager UI(wsdjeg/dein-ui.vim)
-- complement(neoclide/coc.nvim)
-- interface(Shougo/denite.nvim)
-- terminal(Shougo/deol.nvim)
-- filer(Shougo/defx.nvim)
-- tagbar(liuchengxu/vista.vim")
-- doc(vim-jp/vimdoc-ja)
-- colorscheme(tomasr/molokai)
-- visualize git(airblade/vim-gitgutter)
-- git support(tpope/vim-fugitive)
+- plugin manager
+    - Shougo/dein.nvim
+    - wsdjeg/dein-ui.vim
+- complement
+    - neoclide/coc.nvim
+- terminal
+    - Shougo/deol.nvim
+- filer
+    - Shougo/defx.nvim
+- tagbar
+    - liuchengxu/vista.vim
+- colorscheme
+    - sainnhe/sonokai
+- git support
+    - tpope/vim-fugitive

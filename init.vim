@@ -61,7 +61,6 @@ endif
 augroup MySetting
     au!
     au filetype quickrun setl norelativenumber
-    au BufNewFile,BufRead *.snip set filetype=snip
 augroup END
 
 " Tab

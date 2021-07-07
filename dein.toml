@@ -148,7 +148,7 @@ augroup MyDeol
     au!
     au VimEnter *cmd.exe set filetype=zsh
 augroup END
-nnoremap <silent><Leader>t :Deol powershell<CR>
+nnoremap <silent><Leader>t :Deol powershell -auto-cd=v:false<CR>
 '''
 
 # view
