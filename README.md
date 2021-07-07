@@ -17,23 +17,14 @@ let mapleader = "\<Space\>"
 |:------------:|:----:|
 |\<ESC\>\<ESC\>| nohlsearch |
 |\<Leader\>v| tagbar |
-|\<Leader\>f| file explorer |
-|\<Leader\>d| denite file |
+|\<Leader\>f| filer |
+|\<Leader\>d| project files |
 |\<Leader\>b| buffer |
 |\<Leader\>t| terminal |
 |\<Leader\>h| help |
 |\<Leader\>:| command history |
 |\<Leader\>p| register |
-
-### denite
-|   mappings   | move |
-|:------------:|:----:|
-| l | do\_action |
-| d | delete |
-| p | preview |
-| q | quit |
-| i | open\_filter\_buffer |
-| h | toggle\_select |
+|\<Leader\>r| markdown preveiw |
 
 ## plugins
 - plugin manager

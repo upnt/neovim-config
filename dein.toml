@@ -283,6 +283,14 @@ nnoremap <silent><Leader>gp :Git push<CR>
 '''
 
 [[plugins]]
+repo = "iamcco/markdown-preview.nvim"
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+build = 'cd app && yarn install'
+hook_add = '''
+au Filetype markdown,pandoc.markdown,rmd nmap <Leader>r <Plug>MarkdownPreview
+'''
+
+[[plugins]]
 repo = "vim-jp/vimdoc-ja"
 
 [[plugins]]
