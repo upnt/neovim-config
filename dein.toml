@@ -5,8 +5,14 @@ repo = "nvim-lua/plenary.nvim"
 repo = "nvim-lua/popup.nvim"
 
 [[plugins]]
+repo = "junegunn/fzf"
+build = './install -all'
+rtp = ''
+
+[[plugins]]
 repo = "neoclide/coc.nvim"
 merged = 0
+rev = 'release/remote'
 hook_add = '''
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -30,6 +36,7 @@ nnoremap <Leader>cf <Plug>(coc-format)
 nnoremap <silent><Leader>d :CocList files<CR>
 nnoremap <silent><Leader>b :CocList buffers<CR>
 nnoremap <silent><Leader>h :CocList helptags<CR>
+nnoremap <silent><Leader>o :CocList outline<CR>
 '''
 
 [[plugins]]
@@ -117,7 +124,10 @@ function! s:defx_my_settings() abort
 endfunction
 call defx#custom#option('_', {
     \ 'split': 'vertical',
-    \ 'winwidth': 30,
+    \ 'floating_preview': v:true,
+    \ 'preview_height': 30,
+    \ 'preview_width': 100,
+    \ 'winwidth': 25,
     \ 'toggle': v:true,
     \ 'focus': v:false,
     \ 'columns': 'indent:git:icons:filename:type',
@@ -225,7 +235,7 @@ hook_add = '''
         elseif winwidth(0) <= 70
             return ''
         else
-            return "\ue0a0" . fugitive#head()
+            return "\ue0a0" . fugitive#head() . ' '
         endif
     endfunction
 
@@ -248,22 +258,40 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = "sainnhe/gruvbox-material"
+hook_add = '''
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_statusline_style = 'original'
+
+let g:gruvbox_material_enable_italic = 1
+let g:gruvbox_material_enable_bold = 1
+let g:gruvbox_material_better_performance = 1
+let g:gruvbox_material_diagnostic_virtual_text = 'colored'
+let g:gruvbox_material_diagnostic_text_highlight = 1
+let g:gruvbox_material_diagnostic_line_highlight = 1
+'''
+
+[[plugins]]
 repo = "sainnhe/everforest"
 hook_add = '''
+let g:everforest_material_background = 'hard'
+let g:everforest_material_statusline_style = 'original'
 
-let g:everforest_background = 'hard'
 let g:everforest_enable_italic = 1
-let g:everforest_disable_italic_comment = 1
+let g:everforest_enable_bold = 1
+let g:everforest_better_performance = 1
+let g:everforest_diagnostic_virtual_text = 'colored'
+let g:everforest_diagnostic_text_highlight = 1
+let g:everforest_diagnostic_line_highlight = 1
 '''
 
 [[plugins]]
 repo = "sainnhe/sonokai"
 hook_add = '''
-let g:colortheme = 'sonokai'
 
 let g:sonokai_style = 'andromeda'
+
 let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 1
 let g:sonokai_better_performance = 1
 let g:sonokai_diagnostic_virtual_text = 'colored'
 let g:sonokai_diagnostic_line_highlight = 1
@@ -278,7 +306,9 @@ repo = "tpope/vim-fugitive"
 hook_add = '''
 nnoremap <silent><Leader>gd :Gvdiffsplit<CR>
 nnoremap <silent><Leader>gb :Git blame<CR>
-nnoremap <silent><Leader>gs :Git<CR>
+nnoremap <silent><Leader>gg :Git<CR>
+nnoremap <silent><Leader>ga :Gwrite<CR>
+nnoremap <silent><Leader>gc :Gcommit<CR>
 nnoremap <silent><Leader>gp :Git push<CR>
 '''
 
@@ -300,3 +330,15 @@ let g:rooter_patterns = ['.git', 'Makefile', '*.sln']
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_cd_cmd = 'tcd'
 '''
+
+[[plugins]]
+repo = "nvim-treesitter/nvim-treesitter"
+
+[[plugins]]
+repo = "tpope/vim-surround"
+
+[[plugins]]
+repo = "tpope/vim-repeat"
+
+[[plugins]]
+repo = "unblevable/quick-scope"
