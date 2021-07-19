@@ -5,8 +5,8 @@ tnoremap <C-;> <C-\><C-n>
 nnoremap <silent>gr :tabprevious<CR>
 nnoremap <silent><ESC><ESC> :nohlsearch<CR>
 
-let g:python_host_prog=$HOME . '/anaconda3/envs/pynvim2/python.exe'
-let g:python3_host_prog=$HOME . '/anaconda3/envs/pynvim3/python.exe'
+let g:python_host_prog=$HOME . '\scoop\apps\anaconda3\2021.05\envs/pynvim2/python.exe'
+let g:python3_host_prog=$HOME . '\scoop\apps\anaconda3\2021.05\envs/pynvim3/python.exe'
 if exists('g:neovide')
     let g:neovide_cursor_vfx_mode = "ripple"
     let g:neovide_transparency=0.8

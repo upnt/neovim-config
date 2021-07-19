@@ -1,13 +1,12 @@
 [[plugins]]
-repo = "nvim-lua/plenary.nvim"
+repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
-repo = "nvim-lua/popup.nvim"
+repo = 'nvim-lua/popup.nvim'
 
 [[plugins]]
-repo = "neoclide/coc.nvim"
+repo = 'neoclide/coc.nvim'
 merged = 0
-rev = 'release/remote'
 hook_add = '''
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -20,9 +19,9 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_snippet_next = '<tab>'
-let g:coc_snippet_prev = '<s-tab>'
-let g:coc_global_extensions = ['coc-stylelintplus', 'coc-git']
+let g:coc_snippet_next = '<C-j>'
+let g:coc_snippet_prev = '<C-k>'
+let g:coc_global_extensions = ['coc-stylelintplus', 'coc-git', 'coc-lists', 'coc-marketplace', 'coc-pairs', 'coc-snippets']
 nnoremap <Leader>ch :call CocAction('doHover')<CR>
 nnoremap <Leader>cr <Plug>(coc-references)
 nnoremap <Leader>cd <Plug>(coc-definition)
@@ -35,16 +34,27 @@ nnoremap <silent><Leader>o :CocList outline<CR>
 '''
 
 [[plugins]]
-repo = "josa42/vim-lightline-coc"
+repo = 'josa42/vim-lightline-coc'
 
 [[plugins]]
-repo = "lervag/vimtex"
-hook_add = """
+repo = 'jalvesaq/Nvim-R'
+rev = 'stable'
+hook_add = '''
+let g:R_path = "C:\\Users\\shun-\\scoop\\shims\\"
+let g:R_auto_start = 1
+vmap <C-l> <Plug>RDSendSelection
+nmap <C-l> <Plug>RDSendLine
+let g:r_syntax_folding = 1
+'''
+
+[[plugins]]
+repo = 'lervag/vimtex'
+hook_add = '''
 let g:vimtex_view_general_viewer="SumatraPDF"
-"""
+'''
 
 [[plugins]]
-repo = "Shougo/defx.nvim"
+repo = 'Shougo/defx.nvim'
 hook_add = '''
 nnoremap <silent><Leader>f :execute('Defx -buffer-name=' . tabpagenr())<CR>
 function! Tabopen(context) abort
@@ -134,13 +144,13 @@ augroup END
 '''
 
 [[plugins]]
-repo = "kristijanhusak/defx-icons"
+repo = 'kristijanhusak/defx-icons'
 
 [[plugins]]
-repo = "kristijanhusak/defx-git"
+repo = 'kristijanhusak/defx-git'
 
 [[plugins]]
-repo = "Shougo/deol.nvim"
+repo = 'Shougo/deol.nvim'
 hook_add = '''
 augroup MyDeol
     au!
@@ -151,7 +161,7 @@ nnoremap <silent><Leader>t :Deol powershell -auto-cd=v:false<CR>
 
 # view
 [[plugins]]
-repo = "itchyny/lightline.vim"
+repo = 'itchyny/lightline.vim'
 hook_add = '''
     set showtabline=2
     set laststatus=2
@@ -246,7 +256,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = "sainnhe/gruvbox-material"
+repo = 'sainnhe/gruvbox-material'
 hook_add = '''
 let g:gruvbox_material_background = 'hard'
 let g:gruvbox_material_statusline_style = 'original'
@@ -260,7 +270,7 @@ let g:gruvbox_material_diagnostic_line_highlight = 1
 '''
 
 [[plugins]]
-repo = "sainnhe/everforest"
+repo = 'sainnhe/everforest'
 hook_add = '''
 let g:everforest_material_background = 'hard'
 let g:everforest_material_statusline_style = 'original'
@@ -274,7 +284,7 @@ let g:everforest_diagnostic_line_highlight = 1
 '''
 
 [[plugins]]
-repo = "sainnhe/sonokai"
+repo = 'sainnhe/sonokai'
 hook_add = '''
 
 let g:sonokai_style = 'andromeda'
@@ -287,22 +297,22 @@ let g:sonokai_diagnostic_text_highlight = 1
 '''
 
 [[plugins]]
-repo = "airblade/vim-gitgutter"
+repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
-repo = "tpope/vim-fugitive"
+repo = 'tpope/vim-fugitive'
 hook_add = '''
 nnoremap <silent><Leader>gd :Gvdiffsplit<CR>
 nnoremap <silent><Leader>gb :Git blame<CR>
 nnoremap <silent><Leader>gg :Git<CR>
 nnoremap <silent><Leader>gw :Gwrite<CR>
-nnoremap <silent><Leader>gc :Gcommit<CR>
+nnoremap <silent><Leader>gc :Git commit<CR>
 nnoremap <silent><Leader>gp :Git push<CR>
 nnoremap <silent><Leader>gm :Git mergetool<CR>
 '''
 
 [[plugins]]
-repo = "iamcco/markdown-preview.nvim"
+repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown', 'pandoc.markdown', 'rmd']
 build = 'cd app && yarn install'
 hook_add = '''
@@ -310,10 +320,7 @@ au Filetype markdown,pandoc.markdown,rmd nmap <Leader>r <Plug>MarkdownPreview
 '''
 
 [[plugins]]
-repo = "vim-jp/vimdoc-ja"
-
-[[plugins]]
-repo = "airblade/vim-rooter"
+repo = 'airblade/vim-rooter'
 hook_add = '''
 let g:rooter_patterns = ['.git', 'Makefile', '*.sln']
 let g:rooter_change_directory_for_non_project_files = 'current'
@@ -321,20 +328,29 @@ let g:rooter_cd_cmd = 'tcd'
 '''
 
 [[plugins]]
-repo = "nvim-treesitter/nvim-treesitter"
+repo = 'nvim-treesitter/nvim-treesitter'
 
 [[plugins]]
-repo = "tpope/vim-surround"
+repo = 'tpope/vim-surround'
 
 [[plugins]]
-repo = "tpope/vim-repeat"
+repo = 'tpope/vim-repeat'
 
 [[plugins]]
-repo = "unblevable/quick-scope"
+repo = 'unblevable/quick-scope'
 
 [[plugins]]
-repo = "wfxr/minimap.vim"
-hook_add = """
-nnoremap <silent><Leader>m :MinimapToggle<CR>
-let g:minimap_auto_start = 1
-"""
+repo = 'wfxr/minimap.vim'
+hook_add = '''
+nnoremap <silent><Leader>m :Vista!<CR>:MinimapToggle<CR>
+'''
+
+[[plugins]]
+repo = 'liuchengxu/vista.vim'
+hook_add = '''
+let g:vista_default_executive = 'coc'
+nnoremap <silent><Leader>v :MinimapClose<CR>:Vista!!<CR>
+'''
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
