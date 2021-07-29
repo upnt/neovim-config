@@ -21,12 +21,15 @@ endfunction
 
 let g:coc_snippet_next = '<C-j>'
 let g:coc_snippet_prev = '<C-k>'
-let g:coc_global_extensions = ['coc-stylelintplus', 'coc-git', 'coc-lists', 'coc-marketplace', 'coc-pairs', 'coc-snippets']
+let g:coc_global_extensions = ['coc-git', 'coc-lists', 'coc-marketplace', 'coc-pairs', 'coc-snippets']
+nnoremap <Leader>jf :call CocAction('jumpDefinition')<CR>
+nnoremap <Leader>jd :call CocAction('jumpDeclaration')<CR>
+nnoremap <Leader>ji :call CocAction('jumpImplementation')<CR>
+nnoremap <Leader>jr :call CocAction('jumpReferences')<CR>
 nnoremap <Leader>ch :call CocAction('doHover')<CR>
-nnoremap <Leader>cr <Plug>(coc-references)
-nnoremap <Leader>cd <Plug>(coc-definition)
-nnoremap <Leader>cn <Plug>(coc-rename)
-nnoremap <Leader>cf <Plug>(coc-format)
+nnoremap <Leader>cr :call CocAction('rename')<CR>
+nnoremap <Leader>ci :call CocAction('jumpImplementation')<CR>
+nnoremap <Leader>cf :call CocAction('format')<CR>
 nnoremap <silent><Leader>d :CocList files<CR>
 nnoremap <silent><Leader>b :CocList buffers<CR>
 nnoremap <silent><Leader>h :CocList helptags<CR>
@@ -354,3 +357,6 @@ nnoremap <silent><Leader>v :MinimapClose<CR>:Vista!!<CR>
 
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
+
+[[plugins]]
+repo = 'tversteeg/registers.nvim'
