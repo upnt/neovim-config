@@ -1,5 +1,6 @@
 " Setting
 let mapleader="\<Space>"
+let maplocalleader=","
 inoremap <silent><C-;> <ESC>
 tnoremap <C-;> <C-\><C-n>
 nnoremap <silent>gr :tabprevious<CR>
@@ -7,13 +8,16 @@ nnoremap <silent><ESC><ESC> :nohlsearch<CR>
 
 let g:python_host_prog=$HOME . '\scoop\apps\anaconda3\2021.05\envs/pynvim2/python.exe'
 let g:python3_host_prog=$HOME . '\scoop\apps\anaconda3\2021.05\envs/pynvim3/python.exe'
+
+" font
 if exists('g:neovide')
     let g:neovide_cursor_vfx_mode = "ripple"
     let g:neovide_transparency=0.8
-    set guifont=Cica:h22
-endif
-if exists('g:goneovim')
-    set guifont=Cica:h18
+    let &guifont = 'PlemolJP35 Console NF:h18'
+elseif exists('g:goneovim')
+    let &guifont = 'PlemolJP35 Console NF:h14'
+else
+    let &guifont = 'PlemolJP35 Console NF:h18'
 endif
 
 if !exists('g:vscode')
@@ -44,14 +48,6 @@ if !exists('g:vscode')
     filetype plugin indent on
     syntax on
     
-    " Colorscheme
-    let g:colortheme = 'everforest'
-    
-    if exists('g:colortheme')
-        execute('colorscheme ' . g:colortheme)
-        let g:lightline.colorscheme = substitute(g:colortheme, "-", "_", "")
-    endif
-
     if has('termguicolors')
       set termguicolors
     endif
@@ -82,7 +78,6 @@ if !exists('g:vscode')
 
     " Config
     set number
-    set relativenumber
     
     set title
     set cursorline
