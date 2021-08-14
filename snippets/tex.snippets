@@ -46,6 +46,45 @@ snippet name b
 \cfoot{\thepage}
 endsnippet
 
+snippet code_setting b
+\usepackage{listings,jvlisting}
+\newcommand{\coderef}[1]{ソースコード\ref{#1}}
+\renewcommand{\lstlistingname}{ソースコード}
+\lstset{
+	language=$1,
+	basicstyle={\ttfamily},
+	identifierstyle={\small},
+	commentstyle={\smallitshape},
+	keywordstyle={\small\bfseries},
+	ndkeywordstyle={\small},
+	stringstyle={\small\ttfamily},
+	frame={tb},
+	breaklines=true,
+	columns=[l]{fullflexible},
+	numbers=left,
+	xrightmargin=0zw,
+	xleftmargin=3zw,
+	numberstyle={\scriptsize},
+	stepnumber=1,
+	numbersep=1zw,
+	lineskip=-0.5ex
+}
+endsnippet
+
+snippet code b
+\begin{lstlisting}[caption=$1, label=$2]
+	$3
+\end{lstlisting}
+endsnippet
+
+snippet code_input b
+\lstinputlisting[caption=$1 ,label=$2]{$3}
+endsnippet
+
+snippet coderef
+\coderef{$1}
+endsnippet
+
 snippet picture_setting b
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{subfigmat}
@@ -69,6 +108,7 @@ snippet include b
 \caption{$3}
 \label{$4}
 endsnippet
+
 snippet subfigmat b
 \begin{subfigmatrix}{$1}
 	\subfigure[$2]{\includegraphics[width=$3]{$4}}
@@ -92,4 +132,15 @@ snippet minipage b
 		\label{$7}
 	\end{minipage}
 \end{tabular}
+endsnippet
+
+snippet table b
+\begin{table}[htbp]
+	\caption{$1}
+	\label{$2}
+	\centering
+	\begin{tabular}{$3}
+	$4
+	\end{tabular}
+\end{table}
 endsnippet

@@ -32,7 +32,7 @@ nnoremap <Leader>ci :call CocAction('jumpImplementation')<CR>
 nnoremap <Leader>cf :call CocAction('format')<CR>
 nnoremap <silent><Leader>d :CocList files<CR>
 nnoremap <silent><Leader>b :CocList buffers<CR>
-nnoremap <silent><Leader>h :CocList helptags<CR>
+nnoremap <silent><Leader>/ :CocList helptags<CR>
 nnoremap <silent><Leader>o :CocList outline<CR>
 '''
 
@@ -48,6 +48,7 @@ let g:R_auto_start = 1
 vmap <C-l> <Plug>RDSendSelection
 nmap <C-l> <Plug>RDSendLine
 let g:r_syntax_folding = 1
+au Filetype r <Leader>r <Plug>MarkdownPreview
 '''
 
 [[plugins]]
@@ -211,8 +212,6 @@ hook_add = '''
     \       'left': [ [ 'tabs' ] ],
     \       'right': [ [ 'close' ] ] 
     \   }
-    let g:lightline.separator    = { 'left': "\ue0b0", 'right': "\ue0b2" }
-    let g:lightline.subseparator = { 'left': "\ue0b1", 'right': "\ue0b3" }
     function! LightlineFilename()
         let l:p = expand('%:t')
         if '' !=# l:p
@@ -256,6 +255,15 @@ hook_add = '''
         autocmd!
         autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
     augroup END 
+
+    " Colorscheme
+    let g:colortheme = 'sonokai'
+    
+    if exists('g:colortheme')
+        execute('colorscheme ' . g:colortheme)
+        let g:lightline.colorscheme = substitute(g:colortheme, "-", "_", "")
+    endif
+
 '''
 
 [[plugins]]
@@ -312,6 +320,9 @@ nnoremap <silent><Leader>gw :Gwrite<CR>
 nnoremap <silent><Leader>gc :Git commit<CR>
 nnoremap <silent><Leader>gp :Git push<CR>
 nnoremap <silent><Leader>gm :Git mergetool<CR>
+
+nnoremap <silent><Leader>gi :Git init<CR>
+nnoremap <Leader>go :Git push --set-upstream origin 
 '''
 
 [[plugins]]
@@ -428,3 +439,19 @@ plugins = {
 }
 EOF
 '''
+
+[[plugins]]
+repo = 'reireias/vim-cheatsheet'
+hook_add = '''
+let g:cheatsheet#cheat_file = '~/AppData/Local/nvim/cheatsheet/default.txt'
+command! EditCheat :execute('edit ' . g:cheatsheet#cheat_file)
+
+let g:cheatsheet#float_window = 1
+let g:cheatsheet#float_window_width_ratio = 0.8
+let g:cheatsheet#float_window_height_ratio = 0.7
+
+nnoremap <Leader>? <Cmd>Cheat<CR>
+'''
+
+[[plugins]]
+repo = 'simeji/winresizer'
