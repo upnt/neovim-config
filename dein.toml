@@ -5,138 +5,150 @@ repo = 'nvim-lua/plenary.nvim'
 repo = 'nvim-lua/popup.nvim'
 
 [[plugins]]
+repo = 'lewis6991/impatient.nvim'
+hook_add = '''
+lua require('impatient')
+'''
+
+[[plugins]]
 repo = 'vim-denops/denops.vim'
 
 [[plugins]]
-repo = 'neovim/nvim-lspconfig'
+repo = 'simeji/winresizer'
+
+[[plugins]]
+repo = 'vim-jp/syntax-vim-ex'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'reireias/vim-cheatsheet'
 hook_add = '''
-lua require'lspconfig'.pyright.setup{}
-lua require'lspconfig'.vimls.setup{}
+let g:cheatsheet#cheat_file = '~/AppData/Local/nvim/cheatsheet/default.txt'
+command! EditCheat :execute('edit ' . g:cheatsheet#cheat_file)
+
+let g:cheatsheet#float_window = 1
+let g:cheatsheet#float_window_width_ratio = 0.8
+let g:cheatsheet#float_window_height_ratio = 0.7
+
+nnoremap <Leader>? <Cmd>Cheat<CR>
 '''
 
 [[plugins]]
-repo = 'Shougo/denite.nvim'
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+[[plugins]]
+repo = 'unblevable/quick-scope'
+
+[[plugins]]
+repo = 'liuchengxu/vista.vim'
 hook_add = '''
-nnoremap <silent><Leader>d <cmd>Denite file/rec<CR>
-nnoremap <silent><Leader>b <cmd>Denite buffers<CR>
-nnoremap <silent><Leader>/ <cmd>Denite help<CR>
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> l
-    \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> d
-    \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> p
-    \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> q
-    \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-    \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <Space>
-    \ denite#do_map('toggle_select').'j'
-endfunction
+let g:vista_default_executive = 'nvim_lsp'
+nnoremap <silent><Leader>v :Vista!!<CR>
 '''
 
 [[plugins]]
-repo = 'Shougo/defx.nvim'
+repo = 'vim-jp/vimdoc-ja'
+
+[[plugins]]
+repo = 'tversteeg/registers.nvim'
+
+[[plugins]]
+repo = 'folke/which-key.nvim'
 hook_add = '''
-nnoremap <silent><Leader>f :execute('Defx -buffer-name=' . tabpagenr())<CR>
-function! Tabopen(context) abort
-    execute('tabe ' . expand(a:context.targets[0]))
-endfunction
-function! s:defx_my_settings() abort
-    " Define mappings
-    nnoremap <silent><buffer><expr> l
-	\ defx#is_directory() ?
-	\ defx#do_action('open_tree', 'toggle') :
-	\ defx#do_action('drop')
-    nnoremap <silent><buffer><expr> t
-	\ defx#do_action('call', 'Tabopen')
-    nnoremap <silent><buffer><expr> c
-    \ defx#do_action('copy')
-    nnoremap <silent><buffer><expr> m
-    \ defx#do_action('move')
-    nnoremap <silent><buffer><expr> p
-    \ defx#do_action('paste')
-    nnoremap <silent><buffer><expr> o
-    \ defx#do_action('open')
-    nnoremap <silent><buffer><expr> P
-    \ defx#do_action('preview')
-    nnoremap <silent><buffer><expr> K
-    \ defx#do_action('new_directory')
-    nnoremap <silent><buffer><expr> N
-    \ defx#do_action('new_file')
-    nnoremap <silent><buffer><expr> M
-    \ defx#do_action('new_multiple_files')
-    nnoremap <silent><buffer><expr> C
-    \ defx#do_action('toggle_columns',
-    \                'mark:indent:icon:filename:type:size:time')
-    nnoremap <silent><buffer><expr> S
-    \ defx#do_action('toggle_sort', 'time')
-    nnoremap <silent><buffer><expr> d
-    \ defx#do_action('remove')
-    nnoremap <silent><buffer><expr> r
-    \ defx#do_action('rename')
-    nnoremap <silent><buffer><expr> !
-    \ defx#do_action('execute_command')
-    nnoremap <silent><buffer><expr> x
-    \ defx#do_action('execute_system')
-    nnoremap <silent><buffer><expr> yy
-    \ defx#do_action('yank_path')
-    nnoremap <silent><buffer><expr> .
-    \ defx#do_action('toggle_ignored_files')
-    nnoremap <silent><buffer><expr> ;
-    \ defx#do_action('repeat')
-    nnoremap <silent><buffer><expr> h
-    \ defx#do_action('cd', ['..'])
-    nnoremap <silent><buffer><expr> ~
-    \ defx#do_action('cd')
-    nnoremap <silent><buffer><expr> q
-    \ defx#do_action('quit')
-    nnoremap <silent><buffer><expr> <Space>
-    \ defx#do_action('toggle_select')
-    nnoremap <silent><buffer><expr> *
-    \ defx#do_action('toggle_select_all')
-    nnoremap <silent><buffer><expr> <C-l>
-    \ defx#do_action('redraw')
-    nnoremap <silent><buffer><expr> <C-g>
-    \ defx#do_action('print')
-    nnoremap <silent><buffer><expr> cd
-    \ defx#do_action('change_vim_cwd')
-endfunction
-call defx#custom#option('_', {
-    \ 'split': 'vertical',
-    \ 'floating_preview': v:true,
-    \ 'preview_height': 30,
-    \ 'preview_width': 100,
-    \ 'winwidth': 25,
-    \ 'toggle': v:true,
-    \ 'focus': v:false,
-    \ 'columns': 'indent:git:icons:filename:type',
-    \ 'ignored_files': '.*,*.aux,*.log,*.synctex.gz,*.dvi,*.fdb_latexmk,*.fls'
-    \ })
-call defx#custom#column('git', {
-    \ 'show_ignored': 0,
-    \ 'column_length': 2
-    \ })
-augroup MyDefx
-    au!
-    au filetype defx setl nonumber
-    au filetype defx setl norelativenumber
-    au filetype defx call s:defx_my_settings()
-augroup END
+set timeoutlen=500
+lua << EOF
+require("which-key").setup {
+plugins = {
+    marks = true, -- shows a list of your marks on ' and `
+    registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+    -- the presets plugin, adds help for a bunch of default keybindings in Neovim
+    -- No actual key bindings are created
+    spelling = {
+      enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+      suggestions = 20, -- how many suggestions should be shown in the list?
+    },
+    presets = {
+      operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+      motions = true, -- adds help for motions
+      text_objects = true, -- help for text objects triggered after entering an operator
+      windows = true, -- default bindings on <c-w>
+      nav = true, -- misc bindings to work with windows
+      z = true, -- bindings for folds, spelling and others prefixed with z
+      g = true, -- bindings for prefixed with g
+    },
+  },
+  -- add operators that will trigger motion and text object completion
+  -- to enable all native operators, set the preset / operators plugin above
+  operators = { gc = "Comments" },
+  key_labels = {
+    -- override the label used to display some keys. It doesn't effect WK in any other way.
+    -- For example:
+    -- ["<space>"] = "SPC",
+    -- ["<cr>"] = "RET",
+    -- ["<tab>"] = "TAB",
+  },
+  icons = {
+    breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+    separator = "➜", -- symbol used between a key and it's label
+    group = "+", -- symbol prepended to a group
+  },
+  window = {
+    border = "none", -- none, single, double, shadow
+    position = "bottom", -- bottom, top
+    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+    padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
+  },
+  layout = {
+    height = { min = 4, max = 25 }, -- min and max height of the columns
+    width = { min = 20, max = 50 }, -- min and max width of the columns
+    spacing = 3, -- spacing between columns
+    align = "left", -- align columns left, center or right
+  },
+  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
+  show_help = true, -- show help message on the command line when the popup is visible
+  triggers = "auto", -- automatically setup triggers
+  -- triggers = {"<leader>"} -- or specify a list manually
+  triggers_blacklist = {
+    -- list of mode / prefixes that should never be hooked by WhichKey
+    -- this is mostly relevant for key maps that start with a native binding
+    -- most people should not need to change this
+    i = { "j", "k" },
+    v = { "j", "k" },
+  },
+}
+EOF
 '''
 
 [[plugins]]
-repo = 'kristijanhusak/defx-icons'
-
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
-
-[[plugins]]
-repo = 'Shougo/deol.nvim'
+repo = 'airblade/vim-rooter'
 hook_add = '''
-nnoremap <silent><Leader>t :Deol powershell -auto-cd=v:false<CR>
+let g:rooter_patterns = ['.git', 'Makefile', '*.sln']
+let g:rooter_change_directory_for_non_project_files = 'current'
+let g:rooter_cd_cmd = 'tcd'
+'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+nnoremap <silent><Leader>gd :Gvdiffsplit<CR>
+nnoremap <silent><Leader>gb :Git blame<CR>
+nnoremap <silent><Leader>gg :Git<CR>
+nnoremap <silent><Leader>gw :Gwrite<CR>
+nnoremap <silent><Leader>gc :Git commit<CR>
+nnoremap <silent><Leader>gp :Git push<CR>
+nnoremap <silent><Leader>gm :Git mergetool<CR>
+
+nnoremap <silent><Leader>gi :Git init<CR>
+nnoremap <Leader>go :Git push --set-upstream origin 
 '''
 
 # view
@@ -240,135 +252,3 @@ let g:everforest_diagnostic_virtual_text = 'colored'
 let g:everforest_diagnostic_text_highlight = 1
 let g:everforest_diagnostic_line_highlight = 1
 '''
-
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-hook_add = '''
-nnoremap <silent><Leader>gd :Gvdiffsplit<CR>
-nnoremap <silent><Leader>gb :Git blame<CR>
-nnoremap <silent><Leader>gg :Git<CR>
-nnoremap <silent><Leader>gw :Gwrite<CR>
-nnoremap <silent><Leader>gc :Git commit<CR>
-nnoremap <silent><Leader>gp :Git push<CR>
-nnoremap <silent><Leader>gm :Git mergetool<CR>
-
-nnoremap <silent><Leader>gi :Git init<CR>
-nnoremap <Leader>go :Git push --set-upstream origin 
-'''
-
-[[plugins]]
-repo = 'airblade/vim-rooter'
-hook_add = '''
-let g:rooter_patterns = ['.git', 'Makefile', '*.sln']
-let g:rooter_change_directory_for_non_project_files = 'current'
-let g:rooter_cd_cmd = 'tcd'
-'''
-
-[[plugins]]
-repo = 'tpope/vim-surround'
-
-[[plugins]]
-repo = 'tpope/vim-repeat'
-
-[[plugins]]
-repo = 'unblevable/quick-scope'
-
-[[plugins]]
-repo = 'liuchengxu/vista.vim'
-hook_add = '''
-let g:vista_default_executive = 'nvim_lsp'
-nnoremap <silent><Leader>v :Vista!!<CR>
-'''
-
-[[plugins]]
-repo = 'vim-jp/vimdoc-ja'
-
-[[plugins]]
-repo = 'tversteeg/registers.nvim'
-
-[[plugins]]
-repo = 'folke/which-key.nvim'
-hook_add = '''
-set timeoutlen=500
-lua << EOF
-require("which-key").setup {
-plugins = {
-    marks = true, -- shows a list of your marks on ' and `
-    registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-    -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-    -- No actual key bindings are created
-    spelling = {
-      enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-      suggestions = 20, -- how many suggestions should be shown in the list?
-    },
-    presets = {
-      operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-      motions = true, -- adds help for motions
-      text_objects = true, -- help for text objects triggered after entering an operator
-      windows = true, -- default bindings on <c-w>
-      nav = true, -- misc bindings to work with windows
-      z = true, -- bindings for folds, spelling and others prefixed with z
-      g = true, -- bindings for prefixed with g
-    },
-  },
-  -- add operators that will trigger motion and text object completion
-  -- to enable all native operators, set the preset / operators plugin above
-  operators = { gc = "Comments" },
-  key_labels = {
-    -- override the label used to display some keys. It doesn't effect WK in any other way.
-    -- For example:
-    -- ["<space>"] = "SPC",
-    -- ["<cr>"] = "RET",
-    -- ["<tab>"] = "TAB",
-  },
-  icons = {
-    breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-    separator = "➜", -- symbol used between a key and it's label
-    group = "+", -- symbol prepended to a group
-  },
-  window = {
-    border = "none", -- none, single, double, shadow
-    position = "bottom", -- bottom, top
-    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-    padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-  },
-  layout = {
-    height = { min = 4, max = 25 }, -- min and max height of the columns
-    width = { min = 20, max = 50 }, -- min and max width of the columns
-    spacing = 3, -- spacing between columns
-    align = "left", -- align columns left, center or right
-  },
-  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
-  show_help = true, -- show help message on the command line when the popup is visible
-  triggers = "auto", -- automatically setup triggers
-  -- triggers = {"<leader>"} -- or specify a list manually
-  triggers_blacklist = {
-    -- list of mode / prefixes that should never be hooked by WhichKey
-    -- this is mostly relevant for key maps that start with a native binding
-    -- most people should not need to change this
-    i = { "j", "k" },
-    v = { "j", "k" },
-  },
-}
-EOF
-'''
-
-[[plugins]]
-repo = 'reireias/vim-cheatsheet'
-hook_add = '''
-let g:cheatsheet#cheat_file = '~/AppData/Local/nvim/cheatsheet/default.txt'
-command! EditCheat :execute('edit ' . g:cheatsheet#cheat_file)
-
-let g:cheatsheet#float_window = 1
-let g:cheatsheet#float_window_width_ratio = 0.8
-let g:cheatsheet#float_window_height_ratio = 0.7
-
-nnoremap <Leader>? <Cmd>Cheat<CR>
-'''
-
-[[plugins]]
-repo = 'simeji/winresizer'

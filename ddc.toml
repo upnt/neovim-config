@@ -1,12 +1,138 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-on_i = 1
+depends = ['context_filetype.vim', 'denops.vim']
+on_event = 'InsertEnter'
 hook_source = '''
-call ddc#enable()
+  inoremap <silent><expr> <C-l> ddc#complete_common_string()
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? '<C-n>' :
+        \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+        \ '<TAB>' : ddc#manual_complete()
+
+  call ddc#custom#patch_global(
+      \ 'sources', ['eskk', 'around', 'deoppet']
+      \ )
+  call ddc#custom#patch_global('sourceOptions', {
+      \ '_': {
+      \   'ignoreCase': v:true,
+      \   'matchers': ['matcher_head'],
+      \   'sorters': ['sorter_rank'],
+      \   'converters': ['converter_remove_overlap'],
+      \ },
+      \ 'around': {
+      \   'mark': 'A',
+      \   'matchers': ['matcher_head', 'matcher_length'],
+      \ },
+      \ 'eskk': {'mark': 'eskk', 'matchers': [], 'sorters': []},
+      \ 'necovim': {'mark': 'vim'},
+      \ 'deoppet': {'mark': 'dp', 'dup': v:true},
+      \ 'nextword': {
+      \   'mark': 'nextword',
+      \   'minAutoCompleteLength': 3,
+      \   'isVolatile': v:true,
+      \ },
+      \ 'nvimlsp': {'mark': 'lsp', 'forceCompletionPattern': '\.|:|->'},
+      \ })
+  call ddc#custom#patch_filetype(
+      \ ['help', 'markdown', 'gitcommit', 'toml'], 'sources',
+      \ ['eskk', 'nextword', 'around']
+      \ )
+  call ddc#custom#patch_filetype(
+      \ ['typescript', 'go'], 'sources', ['nvimlsp', 'around', 'deoppet']
+      \ )
+  "call ddc#custom#patch_global('completionMode', 'inline')
+  call ddc#enable()
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-around'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-nextword'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_ft = ['vim', 'toml', 'help']
+depends = 'ddc.vim'
+hook_source = '''
+  call ddc#custom#patch_filetype(
+          \ ['vim'], 'sources', ['necovim', 'around', 'deoppet']
+          \ )
 '''
 
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
+on_source = 'nvim-lspconfig'
 
 [[plugins]]
-repo = 'matsui54/ddc-nvim-lsp-doc'
+repo = 'Shougo/ddc-matcher_head'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_length'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-converter_remove_overlap'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+depends = 'impatient.nvim'
+on_ft = ['python', 'vim']
+hook_source = '''
+lua require'lspconfig'.pyright.setup{}
+lua require'lspconfig'.vimls.setup{}
+'''
+
+[[plugins]]
+repo = 'tyru/eskk.vim'
+on_map = {ic = '<Plug>'}
+on_source = 'ddc.vim'
+hook_add = '''
+  imap <C-j>     <Plug>(eskk:toggle)
+  cmap <C-j>     <Plug>(eskk:toggle)
+'''
+hook_source = '''
+  let g:eskk#directory = expand('~/.cache/eskk')
+  let g:eskk#keep_state = 0
+  let g:eskk#debug = 0
+  let g:eskk#show_annotation = 1
+  let g:eskk#rom_input_style = 'msime'
+  let g:eskk#egg_like_newline = 1
+  let g:eskk#egg_like_newline_completion = 1
+  let g:eskk#tab_select_completion = 1
+  let g:eskk#start_completion_length = 2
+  let g:eskk#dictionary = {
+        \   'path': expand('$CACHE/skk-jisyo'),
+        \   'sorted': 0,
+        \   'encoding': 'utf-8',
+        \}
+  let g:eskk#large_dictionary = {
+        \   'path': '/usr/share/skk/SKK-JISYO.L',
+        \   'sorted': 1,
+        \   'encoding': 'euc-jp',
+        \}
+
+  autocmd MyAutoCmd User eskk-initialize-pre call s:eskk_initial_pre()
+  function! s:eskk_initial_pre() abort
+    let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
+    call t.add_map('z ', '　')
+    call t.add_map('~', '〜')
+    call t.add_map('zc', '©')
+    call t.add_map('zr', '®')
+    call t.add_map('z9', '（')
+    call t.add_map('z0', '）')
+    call eskk#register_mode_table('hira', t)
+  endfunction
+
+  let &g:titlestring = "
+        \ %(%m%r%w%)%{eskk#statusline('[%s]').expand('%:p:~:.')}
+        \ %<\(%{fnamemodify(getcwd(), ':~')}\)"
+'''

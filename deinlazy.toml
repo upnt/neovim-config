@@ -1,0 +1,269 @@
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+on_cmd = 'Denite'
+hook_add = '''
+  nnoremap <silent> <Leader>dp
+        \ <Cmd>Denite -buffer-name=register register<CR>
+  xnoremap <silent> <Leader>dp
+        \ <Cmd>Denite -default-action=replace -buffer-name=register
+        \ register<CR>
+
+  nnoremap <silent> <Leader>dd <Cmd>Denite -buffer-name=file
+  \ -no-empty file<CR>
+  nnoremap <silent> <Leader>dg <Cmd>Denite -buffer-name=grep
+  \ -no-empty grep<CR>
+  nnoremap <silent> <Leader>gs <Cmd>Denite -buffer-name=gitstatus
+  \ -no-empty gitstatus<CR>
+  nnoremap <silent> <Leader>dt <Cmd>Denite -buffer-name=deol
+  \ -split=`has('nvim') ? 'floating' : 'horizontal'`
+  \ -cursor-pos=`tabpagenr()-1` deol:zsh<CR>
+'''
+hook_source = '''
+call denite#custom#var('file/rec', 'command',
+      \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+call denite#custom#var('grep', {
+      \ 'command': ['rg', '--threads', '1'],
+      \ 'recursive_opts': [],
+      \ 'final_opts': [],
+      \ 'separator': ['--'],
+      \ 'default_opts': ['--smart-case', '--vimgrep', '--no-heading'],
+      \ })
+
+call denite#custom#source('file/old', 'matchers', [
+      \ 'matcher/clap', 'matcher/project_files', 'matcher/ignore_globs',
+      \ ])
+call denite#custom#source('tag', 'matchers', ['matcher/substring'])
+
+call denite#custom#alias('source', 'file/git', 'file/rec')
+call denite#custom#var('file/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+
+
+call denite#custom#filter('matcher/clap',
+      \ 'clap_path', expand('~/src/vim-clap'))
+call denite#custom#source('file/rec', 'matchers', [
+      \ 'matcher/clap',
+      \ ])
+
+call denite#custom#alias('source', 'file/dirty', 'file/rec')
+call denite#custom#var('file/dirty', 'command',
+      \ ['git', 'ls-files', '-mo',
+      \  '--directory', '--no-empty-directory', '--exclude-standard'])
+
+" call denite#custom#option('default', 'prompt', '>')
+" call denite#custom#option('default', 'short_source_names', v:true)
+if has('nvim')
+  call denite#custom#option('files', {
+        \ 'highlight_filter_background': 'CursorLine',
+        \ 'split': 'floating',
+        \ 'floating_preview': v:true,
+        \ })
+else
+  call denite#custom#option('files', {
+        \ 'highlight_filter_background': 'CursorLine',
+        \ })
+endif
+call denite#custom#option('search', {
+      \ 'highlight_filter_background': 'CursorLine',
+      \ })
+
+call denite#custom#option('_', {
+      \ 'source_names': 'short',
+      \ 'filter_split_direction': 'floating',
+      \ 'vertical_preview': v:true,
+      \ })
+
+let s:menus = {}
+let s:menus.vim = {
+    \ 'description': 'Vim',
+    \ }
+let s:menus.vim.file_candidates = [
+    \ ['    > Edit configuation file (init.vim)', '~/.config/nvim/init.vim']
+    \ ]
+call denite#custom#var('menu', 'menus', s:menus)
+
+call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+'''
+
+[plugins.ftplugin]
+denite = '''
+  " Define mappings
+  nnoremap <silent><buffer><expr> l
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> a
+  \ denite#do_map('choose_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> e
+  \ denite#do_map('do_action', 'edit')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> P
+  \ denite#do_map('do_action', 'preview_bat')
+  nnoremap <silent><buffer><expr> N
+  \ denite#do_map('do_action', 'new')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> '
+  \ denite#do_map('quick_move')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+  nnoremap <silent><buffer><expr> r
+  \ denite#do_map('do_action', 'quickfix')
+  nnoremap <silent><buffer><expr> <C-r>
+  \ denite#do_map('restore_sources')
+  nnoremap <silent><buffer><expr> <C-l>
+  \ denite#do_map('redraw')
+'''
+
+[[plugins]]
+repo = 'neoclide/denite-git'
+on_source = 'denite.nvim'
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hook_add = '''
+nnoremap <silent><Leader>f <Cmd>execute('Defx -buffer-name=' . tabpagenr())<CR>
+augroup MyDefx
+    au!
+    au filetype defx setl nonumber
+    au filetype defx setl norelativenumber
+augroup END
+'''
+hook_source = '''
+call defx#custom#option('_', {
+    \ 'split': 'vertical',
+    \ 'floating_preview': v:true,
+    \ 'preview_height': 30,
+    \ 'preview_width': 100,
+    \ 'winwidth': 25,
+    \ 'toggle': v:true,
+    \ 'focus': v:false,
+    \ 'columns': 'indent:git:icons:filename:type',
+    \ 'ignored_files': '.*,*.aux,*.log,*.synctex.gz,*.dvi,*.fdb_latexmk,*.fls'
+    \ })
+call defx#custom#column('git', {
+    \ 'show_ignored': 0,
+    \ 'column_length': 2
+    \ })
+'''
+
+[plugins.ftplugin]
+defx = '''
+    nnoremap <silent><buffer><expr> l
+	\ defx#is_directory() ?
+	\ defx#do_action('open_tree', 'toggle') :
+	\ defx#do_action('drop')
+    nnoremap <silent><buffer><expr> c
+    \ defx#do_action('copy')
+    nnoremap <silent><buffer><expr> m
+    \ defx#do_action('move')
+    nnoremap <silent><buffer><expr> p
+    \ defx#do_action('paste')
+    nnoremap <silent><buffer><expr> o
+    \ defx#do_action('open')
+    nnoremap <silent><buffer><expr> P
+    \ defx#do_action('preview')
+    nnoremap <silent><buffer><expr> K
+    \ defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> N
+    \ defx#do_action('new_file')
+    nnoremap <silent><buffer><expr> M
+    \ defx#do_action('new_multiple_files')
+    nnoremap <silent><buffer><expr> C
+    \ defx#do_action('toggle_columns',
+    \                'mark:indent:icon:filename:type:size:time')
+    nnoremap <silent><buffer><expr> S
+    \ defx#do_action('toggle_sort', 'time')
+    nnoremap <silent><buffer><expr> d
+    \ defx#do_action('remove')
+    nnoremap <silent><buffer><expr> r
+    \ defx#do_action('rename')
+    nnoremap <silent><buffer><expr> !
+    \ defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr> x
+    \ defx#do_action('execute_system')
+    nnoremap <silent><buffer><expr> yy
+    \ defx#do_action('yank_path')
+    nnoremap <silent><buffer><expr> .
+    \ defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr> ;
+    \ defx#do_action('repeat')
+    nnoremap <silent><buffer><expr> h
+    \ defx#do_action('cd', ['..'])
+    nnoremap <silent><buffer><expr> ~
+    \ defx#do_action('cd')
+    nnoremap <silent><buffer><expr> q
+    \ defx#do_action('quit')
+    nnoremap <silent><buffer><expr> <Space>
+    \ defx#do_action('toggle_select')
+    nnoremap <silent><buffer><expr> *
+    \ defx#do_action('toggle_select_all')
+    nnoremap <silent><buffer><expr> <C-l>
+    \ defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> <C-g>
+    \ defx#do_action('print')
+    nnoremap <silent><buffer><expr> cd
+    \ defx#do_action('change_vim_cwd')
+'''
+
+[[plugins]]
+repo = 'Shougo/deoppet.nvim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertEnter'
+on_source = 'ddc.vim'
+if = 'has("nvim")'
+hook_source = '''
+  " Test
+  "imap L  <Plug>(deoppet_expand)
+  imap <expr> L  deoppet#expandable() ?
+  \ "\<Plug>(deoppet_expand)" : ''
+  imap <C-f>  <Plug>(deoppet_jump_forward)
+  imap <C-b>  <Plug>(deoppet_jump_backward)
+  smap <C-f>  <Plug>(deoppet_jump_forward)
+  smap <C-b>  <Plug>(deoppet_jump_backward)
+  xmap <C-l>  <Plug>(deoppet_select_text)
+  xmap <C-x>  <Plug>(deoppet_cut_text)
+  call deoppet#initialize()
+
+  call deoppet#custom#option('snippets',
+          \ [{ 'path': expand('~/.vim/my-snippets')}] +
+          \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
+          \     { _, val -> { 'path': val } }))
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_source = '''
+let g:context_filetype#ignore_patterns = {
+    \ 'toml': ['^\s*#\s*'],
+    \ }
+'''
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+hook_add = '''
+nnoremap <silent><Leader>t :Deol pwsh -auto-cd=v:false<CR>
+'''
+[plugins.ftplugin]
+deol = '''
+  nnoremap <buffer><silent> [Space]gc
+  \ <Cmd>call deol#send('git commit')<CR>
+  nnoremap <buffer><silent> [Space]gs
+  \ <Cmd>call deol#send('git status')<CR>
+  nnoremap <buffer><silent> [Space]gA
+  \ <Cmd>call deol#send('git commit --amend')<CR>
+'''
