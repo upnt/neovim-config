@@ -38,6 +38,7 @@ if !exists('g:vscode')
         call dein#add('Shougo/dein.vim')
         call dein#add('wsdjeg/dein-ui.vim')
         call dein#load_toml(stdpath('config') . '/dein.toml')
+        call dein#load_toml(stdpath('config') . '/ddc.toml', {'lazy': 1})
         
         " Required:
         call dein#end()

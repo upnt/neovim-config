@@ -1,0 +1,12 @@
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+on_i = 1
+hook_source = '''
+call ddc#enable()
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+
+[[plugins]]
+repo = 'matsui54/ddc-nvim-lsp-doc'

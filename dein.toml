@@ -5,56 +5,36 @@ repo = 'nvim-lua/plenary.nvim'
 repo = 'nvim-lua/popup.nvim'
 
 [[plugins]]
-repo = 'neoclide/coc.nvim'
-merged = 0
-hook_add = '''
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+repo = 'vim-denops/denops.vim'
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+hook_add = '''
+lua require'lspconfig'.pyright.setup{}
+lua require'lspconfig'.vimls.setup{}
+'''
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+nnoremap <silent><Leader>d <cmd>Denite file/rec<CR>
+nnoremap <silent><Leader>b <cmd>Denite buffers<CR>
+nnoremap <silent><Leader>/ <cmd>Denite help<CR>
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> l
+    \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> d
+    \ denite#do_map('do_action', 'delete')
+    nnoremap <silent><buffer><expr> p
+    \ denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> q
+    \ denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i
+    \ denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <Space>
+    \ denite#do_map('toggle_select').'j'
 endfunction
-
-let g:coc_snippet_next = '<C-j>'
-let g:coc_snippet_prev = '<C-k>'
-let g:coc_global_extensions = ['coc-git', 'coc-lists', 'coc-marketplace', 'coc-pairs', 'coc-snippets']
-nnoremap <Leader>jf :call CocAction('jumpDefinition')<CR>
-nnoremap <Leader>jd :call CocAction('jumpDeclaration')<CR>
-nnoremap <Leader>ji :call CocAction('jumpImplementation')<CR>
-nnoremap <Leader>jr :call CocAction('jumpReferences')<CR>
-nnoremap <Leader>ch :call CocAction('doHover')<CR>
-nnoremap <Leader>cr :call CocAction('rename')<CR>
-nnoremap <Leader>ci :call CocAction('jumpImplementation')<CR>
-nnoremap <Leader>cf :call CocAction('format')<CR>
-nnoremap <silent><Leader>d :CocList files<CR>
-nnoremap <silent><Leader>b :CocList buffers<CR>
-nnoremap <silent><Leader>/ :CocList helptags<CR>
-nnoremap <silent><Leader>o :CocList outline<CR>
-'''
-
-[[plugins]]
-repo = 'josa42/vim-lightline-coc'
-
-[[plugins]]
-repo = 'jalvesaq/Nvim-R'
-rev = 'stable'
-hook_add = '''
-let g:R_path = "C:\\Users\\shun-\\scoop\\shims\\"
-let g:R_auto_start = 1
-vmap <C-l> <Plug>RDSendSelection
-nmap <C-l> <Plug>RDSendLine
-let g:r_syntax_folding = 1
-au Filetype r <Leader>r <Plug>MarkdownPreview
-'''
-
-[[plugins]]
-repo = 'lervag/vimtex'
-hook_add = '''
-let g:vimtex_view_general_viewer="SumatraPDF"
 '''
 
 [[plugins]]
@@ -156,10 +136,6 @@ repo = 'kristijanhusak/defx-git'
 [[plugins]]
 repo = 'Shougo/deol.nvim'
 hook_add = '''
-augroup MyDeol
-    au!
-    au VimEnter *cmd.exe set filetype=zsh
-augroup END
 nnoremap <silent><Leader>t :Deol powershell -auto-cd=v:false<CR>
 '''
 
@@ -182,7 +158,6 @@ hook_add = '''
     \   }
     let g:lightline.component_function ={
     \       'filename': 'LightlineFilename',
-    \       'method': 'NearestMethodOrFunction',
     \       'filetype': 'LightlineFiletype', 
     \       'fileformat': 'LightlineFileformat', 
     \       'fileencoding': 'LightlineFileencoding', 
@@ -219,15 +194,6 @@ hook_add = '''
         endif
         return '[No Name]'
     endfunction
-    function! NearestMethodOrFunction() abort
-        let l:func_name = get(b:, 'vista_nearest_method_or_function', '')
-        if winwidth(0) <= 70
-            return ''
-        elseif l:func_name != ''
-            return ' ' . l:func_name
-        endif
-        return ''
-    endfunction
 
     function! LightlineGitbranch()
         if len(fugitive#head()) == 0
@@ -251,33 +217,14 @@ hook_add = '''
         return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
     endfunction
    
-    augroup LightLineOnVista
-        autocmd!
-        autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-    augroup END 
-
     " Colorscheme
-    let g:colortheme = 'sonokai'
+    let g:colortheme = 'everforest'
     
     if exists('g:colortheme')
         execute('colorscheme ' . g:colortheme)
         let g:lightline.colorscheme = substitute(g:colortheme, "-", "_", "")
     endif
 
-'''
-
-[[plugins]]
-repo = 'sainnhe/gruvbox-material'
-hook_add = '''
-let g:gruvbox_material_background = 'hard'
-let g:gruvbox_material_statusline_style = 'original'
-
-let g:gruvbox_material_enable_italic = 1
-let g:gruvbox_material_enable_bold = 1
-let g:gruvbox_material_better_performance = 1
-let g:gruvbox_material_diagnostic_virtual_text = 'colored'
-let g:gruvbox_material_diagnostic_text_highlight = 1
-let g:gruvbox_material_diagnostic_line_highlight = 1
 '''
 
 [[plugins]]
@@ -292,19 +239,6 @@ let g:everforest_better_performance = 1
 let g:everforest_diagnostic_virtual_text = 'colored'
 let g:everforest_diagnostic_text_highlight = 1
 let g:everforest_diagnostic_line_highlight = 1
-'''
-
-[[plugins]]
-repo = 'sainnhe/sonokai'
-hook_add = '''
-
-let g:sonokai_style = 'andromeda'
-
-let g:sonokai_enable_italic = 1
-let g:sonokai_better_performance = 1
-let g:sonokai_diagnostic_virtual_text = 'colored'
-let g:sonokai_diagnostic_line_highlight = 1
-let g:sonokai_diagnostic_text_highlight = 1
 '''
 
 [[plugins]]
@@ -326,23 +260,12 @@ nnoremap <Leader>go :Git push --set-upstream origin
 '''
 
 [[plugins]]
-repo = 'iamcco/markdown-preview.nvim'
-on_ft = ['markdown', 'pandoc.markdown', 'rmd']
-build = 'cd app && yarn install'
-hook_add = '''
-au Filetype markdown,pandoc.markdown,rmd nmap <Leader>r <Plug>MarkdownPreview
-'''
-
-[[plugins]]
 repo = 'airblade/vim-rooter'
 hook_add = '''
 let g:rooter_patterns = ['.git', 'Makefile', '*.sln']
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_cd_cmd = 'tcd'
 '''
-
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -354,16 +277,10 @@ repo = 'tpope/vim-repeat'
 repo = 'unblevable/quick-scope'
 
 [[plugins]]
-repo = 'wfxr/minimap.vim'
-hook_add = '''
-nnoremap <silent><Leader>m :Vista!<CR>:MinimapToggle<CR>
-'''
-
-[[plugins]]
 repo = 'liuchengxu/vista.vim'
 hook_add = '''
-let g:vista_default_executive = 'coc'
-nnoremap <silent><Leader>v :MinimapClose<CR>:Vista!!<CR>
+let g:vista_default_executive = 'nvim_lsp'
+nnoremap <silent><Leader>v :Vista!!<CR>
 '''
 
 [[plugins]]

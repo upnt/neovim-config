@@ -1,5 +1,0 @@
-{
-    "r.lsp.path": "C:\\Program Files\\R\\R-4.1.0\\bin\\x64\\R.exe",
-    "snippets.enableStatusItem": true,
-    "snippets.userSnippetsDirectory": "~/AppData/Local/nvim/snippets"
-}
