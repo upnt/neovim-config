@@ -9,6 +9,7 @@ hook_source = '''
         \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
         \ '<TAB>' : ddc#manual_complete()
 
+  inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
   call ddc#custom#patch_global(
       \ 'sources', ['eskk', 'around', 'deoppet']
       \ )
@@ -26,16 +27,11 @@ hook_source = '''
       \ 'eskk': {'mark': 'eskk', 'matchers': [], 'sorters': []},
       \ 'necovim': {'mark': 'vim'},
       \ 'deoppet': {'mark': 'dp', 'dup': v:true},
-      \ 'nextword': {
-      \   'mark': 'nextword',
-      \   'minAutoCompleteLength': 3,
-      \   'isVolatile': v:true,
-      \ },
       \ 'nvimlsp': {'mark': 'lsp', 'forceCompletionPattern': '\.|:|->'},
       \ })
   call ddc#custom#patch_filetype(
       \ ['help', 'markdown', 'gitcommit', 'toml'], 'sources',
-      \ ['eskk', 'nextword', 'around']
+      \ ['eskk', 'around']
       \ )
   call ddc#custom#patch_filetype(
       \ ['typescript', 'go'], 'sources', ['nvimlsp', 'around', 'deoppet']
@@ -46,10 +42,6 @@ hook_source = '''
 
 [[plugins]]
 repo = 'Shougo/ddc-around'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-nextword'
 on_source = 'ddc.vim'
 
 [[plugins]]
@@ -89,6 +81,8 @@ on_ft = ['python', 'vim']
 hook_source = '''
 lua require'lspconfig'.pyright.setup{}
 lua require'lspconfig'.vimls.setup{}
+lua require'lspconfig'.clangd.setup{}
+lua require'lspconfig'.cmake.setup{}
 '''
 
 [[plugins]]
@@ -120,7 +114,9 @@ hook_source = '''
         \   'encoding': 'euc-jp',
         \}
 
-  autocmd MyAutoCmd User eskk-initialize-pre call s:eskk_initial_pre()
+  augroup MyEskk
+    autocmd User eskk-initialize-pre call s:eskk_initial_pre()
+  augroup END
   function! s:eskk_initial_pre() abort
     let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
     call t.add_map('z ', '　')
