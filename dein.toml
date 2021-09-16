@@ -17,12 +17,6 @@ repo = 'vim-denops/denops.vim'
 repo = 'simeji/winresizer'
 
 [[plugins]]
-repo = 'vim-jp/syntax-vim-ex'
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-
-[[plugins]]
 repo = 'reireias/vim-cheatsheet'
 hook_add = '''
 let g:cheatsheet#cheat_file = '~/AppData/Local/nvim/cheatsheet/default.txt'

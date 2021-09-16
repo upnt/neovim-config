@@ -1,0 +1,7 @@
+[[plugins]]
+repo = 'vim-jp/syntax-vim-ex'
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
