@@ -12,6 +12,8 @@ hook_add = '''
   \ -no-empty file<CR>
   nnoremap <silent> <Leader>dg <Cmd>Denite -buffer-name=grep
   \ -no-empty grep<CR>
+  nnoremap <silent> <Leader>db <Cmd>Denite -buffer-name=buffer
+  \ -no-empty buffer<CR>
   nnoremap <silent> <Leader>gs <Cmd>Denite -buffer-name=gitstatus
   \ -no-empty gitstatus<CR>
   nnoremap <silent> <Leader>dt <Cmd>Denite -buffer-name=deol
