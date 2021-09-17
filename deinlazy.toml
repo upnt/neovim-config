@@ -285,4 +285,12 @@ lua require'lspconfig'.pyright.setup{}
 lua require'lspconfig'.vimls.setup{}
 lua require'lspconfig'.clangd.setup{}
 lua require'lspconfig'.cmake.setup{}
+
+nnoremap <Leader>ll <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <Leader>ld <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <Leader>ls <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <Leader>lh <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <Leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <Leader>li <cmd>vim.lsp.buf.implementation()<CR>
+nnoremap <Leader>lf <cmd>vim.lsp.buf.formatting()<CR>
 '''

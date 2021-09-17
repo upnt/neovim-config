@@ -5,6 +5,7 @@ cs      replace surround
 ds      delete surround
 
 <prefix>
+l - lsp
 d - Denite
 g - git
 h - gitgutter
