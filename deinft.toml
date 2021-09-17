@@ -1,0 +1,58 @@
+[ftplugin]
+
+_ = '''
+setl foldlevel=6
+setl foldmethod=expr
+setl foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+'''
+
+python = '''
+" Indent settings.
+setl foldmethod=indent
+setl softtabstop=4
+setl shiftwidth=4
+setl textwidth=80
+setl smarttab
+setl expandtab
+setl nosmartindent
+'''
+
+html = '''
+setl includeexpr=substitute(v:fname,'^\\/','','')
+setl path+=./;/
+'''
+
+go = '''
+highlight default link goErr WarningMsg
+match goErr /\<err\>/
+'''
+
+vim = '''
+setl shiftwidth=2 softtabstop=2
+setl iskeyword+=:,#
+setl indentkeys+=\\,endif,endfunction,endfor,endwhile,endtry
+'''
+
+qfreplace = 'setl nofoldenable'
+
+help = '''
+setl iskeyword+=:
+setl iskeyword+=#
+setl iskeyword+=-
+'''
+
+ruby = '''
+setl iskeyword+=!
+setl iskeyword+=?
+setl omnifunc=
+setl shiftwidth=2 softtabstop=2 tabstop=2
+'''
+
+typescript = '''
+setl shiftwidth=2
+'''
+
+markdown = '''
+setl foldexpr=
+setl iskeyword-='
+'''

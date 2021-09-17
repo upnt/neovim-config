@@ -20,7 +20,7 @@ repo = 'simeji/winresizer'
 repo = 'reireias/vim-cheatsheet'
 hook_add = '''
 let g:cheatsheet#cheat_file = '~/AppData/Local/nvim/cheatsheet/default.txt'
-command! EditCheat :execute('edit ' . g:cheatsheet#cheat_file)
+command! CheatEdit :execute('edit ' . g:cheatsheet#cheat_file)
 
 let g:cheatsheet#float_window = 1
 let g:cheatsheet#float_window_width_ratio = 0.8

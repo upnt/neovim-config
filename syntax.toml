@@ -5,3 +5,7 @@ on_ft = 'vim'
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
+
+[[plugins]]
+repo = 'bfrg/vim-cpp-modern'
+on_ft = ['c', 'cpp']

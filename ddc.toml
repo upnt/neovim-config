@@ -3,7 +3,6 @@ repo = 'Shougo/ddc.vim'
 depends = ['context_filetype.vim', 'denops.vim']
 on_event = 'InsertEnter'
 hook_source = '''
-  inoremap <silent><expr> <C-l> ddc#complete_common_string()
   inoremap <silent><expr> <TAB>
         \ pumvisible() ? '<C-n>' :
         \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
@@ -28,15 +27,36 @@ hook_source = '''
       \ 'necovim': {'mark': 'vim'},
       \ 'deoppet': {'mark': 'dp', 'dup': v:true},
       \ 'nvimlsp': {'mark': 'lsp', 'forceCompletionPattern': '\.|:|->'},
+      \ 'file': {
+      \   'mark': 'F',
+      \   'isVolatile': v:true,
+      \   'forceCompletionPattern': '\S/\S*',
+      \ }
       \ })
   call ddc#custom#patch_filetype(
       \ ['help', 'markdown', 'gitcommit', 'toml'], 'sources',
       \ ['eskk', 'around']
       \ )
   call ddc#custom#patch_filetype(
-      \ ['typescript', 'go'], 'sources', ['nvimlsp', 'around', 'deoppet']
+      \ ['python', 'c', 'cpp', 'objc', 'objcpp', 'cmake'], 'sources',
+      \ ['nvimlsp', 'deoppet', 'around', 'file']
       \ )
-  "call ddc#custom#patch_global('completionMode', 'inline')
+  call ddc#custom#patch_filetype(
+      \ ['vim'], 'sources',
+      \ ['nvimlsp', 'necovim', 'file', 'around', 'deoppet']
+      \ )
+  call ddc#custom#patch_filetype(
+      \ ['ps1', 'dosbatch', 'autohotkey', 'registry'], {
+      \ 'sourceOptions': {
+      \   'file': {
+      \     'forceCompletionPattern': '\S\\\S*',
+      \   },
+      \ },
+      \ 'sourceParams': {
+      \   'file': {
+      \     'mode': 'win32',
+      \   },
+      \ }})
   call ddc#enable()
 '''
 
@@ -48,11 +68,6 @@ on_source = 'ddc.vim'
 repo = 'Shougo/neco-vim'
 on_ft = ['vim', 'toml', 'help']
 depends = 'ddc.vim'
-hook_source = '''
-  call ddc#custom#patch_filetype(
-          \ ['vim'], 'sources', ['necovim', 'around', 'deoppet']
-          \ )
-'''
 
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
@@ -75,15 +90,8 @@ repo = 'Shougo/ddc-converter_remove_overlap'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'neovim/nvim-lspconfig'
-depends = 'impatient.nvim'
-on_ft = ['python', 'vim']
-hook_source = '''
-lua require'lspconfig'.pyright.setup{}
-lua require'lspconfig'.vimls.setup{}
-lua require'lspconfig'.clangd.setup{}
-lua require'lspconfig'.cmake.setup{}
-'''
+repo = 'LumaKernel/ddc-file'
+on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'tyru/eskk.vim'
@@ -131,4 +139,11 @@ hook_source = '''
   let &g:titlestring = "
         \ %(%m%r%w%)%{eskk#statusline('[%s]').expand('%:p:~:.')}
         \ %<\(%{fnamemodify(getcwd(), ':~')}\)"
+'''
+
+[[plugins]]
+repo = 'matsui54/ddc-nvim-lsp-doc'
+on_source = 'ddc-nvim-lsp'
+hook_source = '''
+call ddc_nvim_lsp_doc#enable()
 '''

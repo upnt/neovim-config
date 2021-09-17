@@ -1,4 +1,10 @@
+<keybinding>
+<Space> <Leader>
+ys      surround
+cs      replace surround
+ds      delete surround
+
 <prefix>
-ys  surround
-cs  replace surround
-ds  delete surround
+d - Denite
+g - git
+h - gitgutter
