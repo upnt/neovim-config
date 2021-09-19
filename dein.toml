@@ -5,6 +5,10 @@ repo = 'nvim-lua/plenary.nvim'
 repo = 'nvim-lua/popup.nvim'
 
 [[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
 repo = 'lewis6991/impatient.nvim'
 hook_add = '''
 lua require('impatient')
