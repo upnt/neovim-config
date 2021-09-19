@@ -11,12 +11,12 @@ let g:python3_host_prog='C:\tools\Anaconda3\envs\pynvim3\python.exe'
 
 " Undo
 if has('persistent_undo')
-	let undo_path = expand('~/.cache/undo')
-	if !isdirectory(undo_path)
-		call mkdir(undo_path, "p")
-	endif
-	exe 'set undodir=' .. undo_path
-	set undofile
+  let undo_path = expand('~/.cache/undo')
+  if !isdirectory(undo_path)
+	call mkdir(undo_path, "p")
+  endif
+  exe 'set undodir=' .. undo_path
+  set undofile
 endif
 
 " Font
