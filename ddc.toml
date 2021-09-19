@@ -10,7 +10,7 @@ hook_source = '''
 
   inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
   call ddc#custom#patch_global(
-      \ 'sources', ['eskk', 'around', 'deoppet']
+      \ 'sources', ['eskk', 'deoppet', 'around']
       \ )
   call ddc#custom#patch_global('sourceOptions', {
       \ '_': {
@@ -35,15 +35,15 @@ hook_source = '''
       \ })
   call ddc#custom#patch_filetype(
       \ ['help', 'markdown', 'gitcommit', 'toml'], 'sources',
-      \ ['eskk', 'around']
+      \ ['eskk',  'deoppet', 'around']
       \ )
   call ddc#custom#patch_filetype(
       \ ['python', 'c', 'cpp', 'objc', 'objcpp', 'cmake'], 'sources',
-      \ ['nvimlsp', 'deoppet', 'around', 'file']
+      \ ['nvimlsp', 'file', 'deoppet', 'around']
       \ )
   call ddc#custom#patch_filetype(
       \ ['vim'], 'sources',
-      \ ['nvimlsp', 'necovim', 'file', 'around', 'deoppet']
+      \ ['nvimlsp', 'necovim', 'file', 'deoppet', 'around']
       \ )
   call ddc#custom#patch_filetype(
       \ ['ps1', 'dosbatch', 'autohotkey', 'registry'], {
