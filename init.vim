@@ -1,4 +1,3 @@
-" Setting
 let mapleader="\<Space>"
 let maplocalleader=","
 inoremap <silent><C-;> <ESC>
@@ -9,7 +8,18 @@ command! Setting :execute('edit ' . stdpath('config') . '/init.vim')
 
 let g:python_host_prog='C:\tools\Anaconda3\envs\pynvim2\python.exe'
 let g:python3_host_prog='C:\tools\Anaconda3\envs\pynvim3\python.exe'
-" font
+
+" Undo
+if has('persistent_undo')
+	let undo_path = expand('~/.cache/undo')
+	if !isdirectory(undo_path)
+		call mkdir(undo_path, "p")
+	endif
+	exe 'set undodir=' .. undo_path
+	set undofile
+endif
+
+" Font
 if exists('g:neovide')
   let g:neovide_cursor_vfx_mode = "ripple"
   let g:neovide_transparency=0.8
@@ -20,46 +30,23 @@ else
   let &guifont = 'PlemolJP35 Console NF:h18'
 endif
 
+if has('termguicolors')
+  set termguicolors
+endif
+
 if !exists('g:vscode')
-  " Dein Setting
-  if &compatible
-      set nocompatible               " Be iMproved
-  endif
-  
-  " Required:
-  set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
-  set runtimepath+=$HOME/.vim/bundle/vim-snippets
-  
-  " Required:
-  if dein#load_state($HOME . '/.cache/dein')
-      call dein#begin($HOME . '/.cache/dein')
-      " Let dein manage dein
-      " Required:
-      call dein#add('Shougo/dein.vim')
-      call dein#add('wsdjeg/dein-ui.vim')
-      call dein#load_toml(stdpath('config') . '/dein.toml')
-      call dein#load_toml(stdpath('config') . '/deinft.toml')
-      call dein#load_toml(stdpath('config') . '/deinlazy.toml', {'lazy': 1})
-      call dein#load_toml(stdpath('config') . '/ddc.toml', {'lazy': 1})
-      call dein#load_toml(stdpath('config') . '/syntax.toml', {'lazy': 1})
-      
-      " Required:
-      call dein#end()
-      call dein#save_state()
-  endif
-  
-  filetype plugin indent on
-  syntax on
-  
-  if has('termguicolors')
-    set termguicolors
-  endif
-  
-  augroup MySetting
-      au!
-      au filetype quickrun setl norelativenumber
-  augroup END
-  
+  " Config
+  set number
+  set title
+  set cursorline
+  set hidden
+  set splitbelow
+  set helpheight=25
+  set iminsert=1
+  set ambiwidth=double
+  set pumblend=20
+
+  " Search
   set hlsearch
   set incsearch
   set ignorecase
@@ -73,30 +60,13 @@ if !exists('g:vscode')
   set tabstop=4
   set softtabstop=4
   
-  
-  " Config
-  set number
-  
-  set title
-  set cursorline
-  set hidden
-  set splitbelow
-  set helpheight=25
-  set iminsert=1
-  set ambiwidth=double
-  set pumblend=20
   " Encoding
   set encoding=utf-8
   set fileencodings=utf-8,sjis
   set fileformats=unix,dos,mac
   
-  " Undo
-  if has('persistent_undo')
-  	let undo_path = expand('~/.cache/undo')
-  	if !isdirectory(undo_path)
-  		call mkdir(undo_path, "p")
-  	endif
-  	exe 'set undodir=' .. undo_path
-  	set undofile
-  endif
+  exe('source ' . stdpath('config') . '/dein.vim')
+  filetype plugin indent on
+  syntax on
+
 endif
