@@ -231,7 +231,7 @@ on_source = 'ddc.vim'
 if = 'has("nvim")'
 hook_source = '''
   imap <expr> <C-l>  deoppet#expandable() ?
-  \ "\<Plug>(deoppet_expand)" : '<C-n>'
+  \ "\<Plug>(deoppet_expand)" : '<C-l>'
   imap <C-f>  <Plug>(deoppet_jump_forward)
   imap <C-b>  <Plug>(deoppet_jump_backward)
   smap <C-f>  <Plug>(deoppet_jump_forward)
