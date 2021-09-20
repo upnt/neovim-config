@@ -8,8 +8,8 @@ hook_add = '''
         \ <Cmd>Denite -default-action=replace -buffer-name=register
         \ register<CR>
 
-  nnoremap <silent> <Leader>dd <Cmd>Denite -buffer-name=file
-  \ -no-empty file<CR>
+  nnoremap <silent> <Leader>dd <Cmd>Denite -buffer-name=file/git
+  \ -no-empty file/git<CR>
   nnoremap <silent> <Leader>dg <Cmd>Denite -buffer-name=grep
   \ -no-empty grep<CR>
   nnoremap <silent> <Leader>db <Cmd>Denite -buffer-name=buffer
@@ -18,11 +18,12 @@ hook_add = '''
   \ -no-empty gitstatus<CR>
   nnoremap <silent> <Leader>dt <Cmd>Denite -buffer-name=deol
   \ -split=`has('nvim') ? 'floating' : 'horizontal'`
-  \ -cursor-pos=`tabpagenr()-1` deol:zsh<CR>
+  \ -cursor-pos=`tabpagenr()-1` deol:pwsh<CR>
 '''
 hook_source = '''
 call denite#custom#var('file/rec', 'command',
-      \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+      \ ['rg', '--files', '--glob', '!.git',
+	  \ '--color', 'never'])
 call denite#custom#var('grep', {
       \ 'command': ['rg', '--threads', '1'],
       \ 'recursive_opts': [],
@@ -52,8 +53,8 @@ call denite#custom#var('file/dirty', 'command',
       \ ['git', 'ls-files', '-mo',
       \  '--directory', '--no-empty-directory', '--exclude-standard'])
 
-" call denite#custom#option('default', 'prompt', '>')
-" call denite#custom#option('default', 'short_source_names', v:true)
+call denite#custom#option('default', 'prompt', '>')
+call denite#custom#option('default', 'short_source_names', v:true)
 if has('nvim')
   call denite#custom#option('files', {
         \ 'highlight_filter_background': 'CursorLine',
@@ -147,7 +148,7 @@ call defx#custom#option('_', {
     \ 'toggle': v:true,
     \ 'focus': v:false,
     \ 'columns': 'indent:git:icons:filename:type',
-    \ 'ignored_files': '.*,*.aux,*.log,*.synctex.gz,*.dvi,*.fdb_latexmk,*.fls,*.o'
+    \ 'ignored_files': '.*,*.aux,*.log,*.synctex.gz,*.dvi,*.fdb_latexmk,*.fls,*.o,*.exe'
     \ })
 call defx#custom#column('git', {
     \ 'show_ignored': 0,
@@ -222,30 +223,6 @@ on_source = 'defx.nvim'
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
 on_source = 'defx.nvim'
-
-[[plugins]]
-repo = 'Shougo/deoppet.nvim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertEnter'
-on_source = 'ddc.vim'
-if = 'has("nvim")'
-hook_source = '''
-  imap <expr> <C-l>  deoppet#expandable() ?
-  \ "\<Plug>(deoppet_expand)" : ''
-  imap <C-f>  <Plug>(deoppet_jump_forward)
-  imap <C-b>  <Plug>(deoppet_jump_backward)
-  smap <C-f>  <Plug>(deoppet_jump_forward)
-  smap <C-b>  <Plug>(deoppet_jump_backward)
-  xmap <C-l>  <Plug>(deoppet_select_text)
-  xmap <C-x>  <Plug>(deoppet_cut_text)
-  call deoppet#initialize()
-
-  call deoppet#custom#option('snippets',
-          \ [{ 'path': stdpath('config') . '/snippets' }] +
-          \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
-          \     { _, val -> { 'path': val } }))
-  command! SnippetsEdit :execute('edit ' . stdpath('config') . '/snippets/' . &filetype . '.snip')
-'''
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'

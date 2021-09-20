@@ -142,6 +142,29 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/deoppet.nvim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertEnter'
+on_source = 'ddc.vim'
+if = 'has("nvim")'
+hook_source = '''
+  imap <C-l>  <Plug>(deoppet_expand)
+  imap <C-f>  <Plug>(deoppet_jump_forward)
+  imap <C-b>  <Plug>(deoppet_jump_backward)
+  smap <C-f>  <Plug>(deoppet_jump_forward)
+  smap <C-b>  <Plug>(deoppet_jump_backward)
+  xmap <C-l>  <Plug>(deoppet_select_text)
+  xmap <C-x>  <Plug>(deoppet_cut_text)
+  call deoppet#initialize()
+
+  call deoppet#custom#option('snippets',
+          \ [{ 'path': stdpath('config') . '/snippets' }] +
+          \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
+          \     { _, val -> { 'path': val } }))
+  command! SnippetsEdit :execute('edit ' . stdpath('config') . '/snippets/' . &filetype . '.snip')
+'''
+
+[[plugins]]
 repo = 'matsui54/ddc-nvim-lsp-doc'
 on_source = 'ddc-nvim-lsp'
 hook_source = '''
