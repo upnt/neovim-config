@@ -87,6 +87,7 @@ function! EditSetting(target)
   execute('edit ' . target_path)
 endfunction
 
-function! EditSettingComplete(A, L, P)
-  return [ "nvim", "powershell", "starship" ]
+function! EditSettingComplete(ArgLead, L, P)
+  let candidates = [ "nvim", "powershell", "starship" ]
+  return filter(candidates, "match(v:val, a:ArgLead) == 0")
 endfunction
