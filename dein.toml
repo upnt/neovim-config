@@ -43,14 +43,71 @@ repo = 'tpope/vim-repeat'
 repo = 'unblevable/quick-scope'
 
 [[plugins]]
-repo = 'liuchengxu/vista.vim'
+repo = 'GustavoKatel/sidebar.nvim'
 hook_add = '''
-let g:vista_default_executive = 'nvim_lsp'
-nnoremap <silent><Leader>v :Vista!!<CR>
+nnoremap <silent><Leader>v <cmd>lua require("sidebar-nvim").toggle()<CR>
+
+lua << EOF
+require("sidebar-nvim").setup({
+  initial_width = 35,
+  side = "right",
+  sections = { "datetime", "git-status", "lsp-diagnostics", "todos" }
+})
+EOF
 '''
 
 [[plugins]]
-repo = 'vim-jp/vimdoc-ja'
+repo = 'folke/todo-comments.nvim'
+hook_add = '''
+" lua << EOF
+" require("todo-comments").setup {
+"   signs = true,
+"   sign_priority = 8,
+"   
+"   keywords = {
+"     FIX = {
+"       icon = " ",
+"       color = "error",
+"       alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
+"     },
+"     TODO = { icon = " ", color = "info" },
+"     HACK = { icon = " ", color = "warning" },
+"     WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+"     PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+"     NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+"   },
+"   merge_keywords = true,
+"   
+"   highlight = {
+"     before = "",
+"     keyword = "wide",
+"     after = "fg",
+"     pattern = [[.*<(KEYWORDS)\s*:]],
+"     comments_only = true,
+"     max_line_len = 400,
+"     exclude = {},
+"   },
+"   colors = {
+"     error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
+"     warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
+"     info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
+"     hint = { "LspDiagnosticsDefaultHint", "#10B981" },
+"     default = { "Identifier", "#7C3AED" },
+"   },
+"   search = {
+"     command = "rg",
+"     args = {
+"       "--color=never",
+"       "--no-heading",
+"       "--with-filename",
+"       "--line-number",
+"       "--column",
+"     },
+"     pattern = [[\b(KEYWORDS):]],
+"   },
+" }
+" EOF
+'''
 
 [[plugins]]
 repo = 'tversteeg/registers.nvim'
