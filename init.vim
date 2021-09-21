@@ -89,5 +89,5 @@ endfunction
 
 function! EditSettingComplete(ArgLead, L, P)
   let candidates = [ "nvim", "powershell", "starship" ]
-  return filter(candidates, "match(v:val, a:ArgLead) == 0")
+  return filter(candidates, "match(v:val, a:ArgLead)")
 endfunction
