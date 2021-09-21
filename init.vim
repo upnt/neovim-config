@@ -4,7 +4,6 @@ inoremap <silent><C-;> <ESC>
 tnoremap <C-;> <C-\><C-n>
 nnoremap <silent>gr :tabprevious<CR>
 nnoremap <silent><ESC><ESC> :nohlsearch<CR>
-command! Setting :execute('edit ' . stdpath('config') . '/init.vim')
 
 let g:python_host_prog='C:\tools\Anaconda3\envs\pynvim2\python.exe'
 let g:python3_host_prog='C:\tools\Anaconda3\envs\pynvim3\python.exe'
@@ -70,3 +69,24 @@ if !exists('g:vscode')
   syntax on
 
 endif
+
+
+command! -nargs=1 -complete=customlist,EditSettingComplete
+						  \ Setting call EditSetting(<f-args>)
+function! EditSetting(target)
+  let target_path = ""
+  if a:target == "nvim"
+	let target_path = stdpath('config') . '/init.vim'
+  elseif a:target == "powershell"
+	let target_path = expand('~/OneDrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1')
+  elseif a:target == "starship"
+	let target_path = expand('~/OneDrive/Documents/.starship/config.toml')
+  else
+	return
+  endif
+  execute('edit ' . target_path)
+endfunction
+
+function! EditSettingComplete(A, L, P)
+  return [ "nvim", "powershell", "starship" ]
+endfunction
